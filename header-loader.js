@@ -1,25 +1,13 @@
 // Header Loader - Final Optimized Version
 function loadHeader() {
-    const isIndexPage = window.location.pathname === '/' || 
-                       window.location.pathname.endsWith('/index.html') || 
-                       window.location.pathname.endsWith('/lite/') ||
-                       window.location.pathname.endsWith('/lite/index.html');
-    
-    const filterContent = isIndexPage ? `
-                <button class="filter-toggle" id="filterToggle" data-filter="*" aria-label="Toggle filter options">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-9l-4.414 -4.414a2 2 0 0 1 -.586 -1.414z"/>
-                    </svg>
-                    <span class="filter-text" style="display: none;"></span>
-                </button>` : '';
-    
+    // Filter control removed from header; service chips now control filtering.
+    const filterContent = '';
     const headerHTML = `
     <header>
         <nav>
             <div class="nav-left">
                 <div class="logo">
-                    <a href="${window.location.pathname.includes('/projects/') ? '../' : './'}">Max Boissiere</a>
+                    <a href="${window.location.pathname.includes('/projects/') ? '../' : './'}">Home</a>
                 </div>${filterContent}
             </div>
             <div class="nav-right">

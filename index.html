@@ -23,11 +23,54 @@
     <div id="header-placeholder"></div>
     
     <main role="main" aria-label="Portfolio gallery">
+        <!-- Intro Section / About -->
+        <section class="intro-hero load-item" aria-label="About Max and services">
+            <div class="intro-inner">
+                <div class="intro-copy">
+                    <div class="intro-head">
+                        <img class="intro-avatar" src="gallery/maxboissiere-pfp.png" alt="Portrait of Max Boissiere" loading="lazy" decoding="async">
+                        <div class="intro-id">
+                            <h1 class="intro-name">Max Boissiere</h1>
+                            <div class="intro-meta">
+                                <span class="intro-location"><span class="loc-dot" aria-hidden="true"></span> Arizona, USA</span>
+                            </div>
+                            <div class="intro-time" aria-label="Time zone">GMT -7</div>
+                        </div>
+                    </div>
+                    <p class="intro-blurb">Design-forward cinematography and editing for brands, artists, and organizations — nimble production & polished finishing.</p>
+                                        <div class="intro-cta">
+                        <button class="cta-button" type="button" onclick="openContactSection()">Contact Me</button>
+                    </div>
+                    <ul class="service-chips" aria-label="Filter projects by service">
+                        <li role="button" tabindex="0" data-filter="*" aria-pressed="false">All</li>
+                        <li role="button" tabindex="0" data-filter="dp" aria-pressed="false">Cinematography</li>
+                        <li role="button" tabindex="0" data-filter="editor" aria-pressed="false">Editing</li>
+                        <li role="button" tabindex="0" data-filter="director" aria-pressed="false">Directing</li>
+                    </ul>
+
+                </div>
+            </div>
+        </section>
+        
         <h1 class="visually-hidden">Max Boissiere Cinematography Portfolio</h1>
         
         <div id="gallery" class="gallery-container" role="grid" aria-label="Portfolio projects grid">
 
+            <!-- <div class="gallery-item" data-category="dp" role="gridcell">
+                <a href="projects/hempinnov" aria-label="Hemp Innovations LLC">
+                    <img src="gallery/hi1.png" alt="Hemp Innovations LLC still" loading="lazy">
+                    <div class="overlay">Hemp Innovations LLC</div>
+                </a>
+            </div>
+
             <div class="gallery-item" data-category="dp" role="gridcell">
+                <a href="projects/pitajungle" aria-label="Pita Jungle project">
+                    <img src="gallery/pitajungle1.png" alt="Pita Jungle documentary project still" loading="lazy">
+                    <div class="overlay">Pita Jungle</div>
+                </a>
+            </div> -->
+
+             <div class="gallery-item" data-category="dp" role="gridcell">
                 <a href="projects/acyr" aria-label="Arizona Center for Youth Resources project">
                     <img src="gallery/acyr1.png" alt="Arizona Center for Youth Resources documentary project still" loading="lazy">
                     <div class="overlay">Arizona Center for Youth Resources</div>
@@ -119,62 +162,53 @@
     <!-- Contact Section -->
     <div id="contactSection" class="contact-section">
         <div class="contact-content">
-            <h2>Availability & Services</h2>
-            <div class="availability-status">
-                <div class="status-indicator">
-                    <div class="status-dot available"></div>
-                    <span>Currently Available</span>
+            <h2>Ready to start your project?</h2>
+            <form class="contact-form" action="https://formsubmit.co/max.boissiere@picture-up.co" method="POST">
+                <!-- FormSubmit config -->
+                <input type="hidden" name="_subject" value="New portfolio inquiry">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="./#contactSection">
+                <input type="hidden" name="_replyto" value="{email}">
+                <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" type="text" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input id="location" name="location" type="text" placeholder="City, Country">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="services-grid">
-                <div class="service-category">
-                    <h3>Services</h3>
-                    <ul>
-                        <li>Director of Photography</li>
-                        <li>Camera Operation</li>
-                        <li>Video Editing</li>
-                        <li>Color Grading</li>
-                    </ul>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="budget">Budget</label>
+                        <select id="budget" name="budget">
+                            <option value="" selected>Select a range</option>
+                            <option value="$1k–$3k">$1k–$3k</option>
+                            <option value="$3k–$10k">$3k–$10k</option>
+                            <option value="$10k–$25k">$10k–$25k</option>
+                            <option value="$25k+">$25k+</option>
+                        </select>
+                    </div>
                 </div>
-                
-                <div class="service-category">
-                    <h3>Project Types</h3>
-                    <ul>
-                        <li>Documentaries</li>
-                        <li>Commercials</li>
-                        <li>Music Videos</li>
-                        <li>Short Films</li>
-                    </ul>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="6" placeholder="Tell me about your project…" required></textarea>
                 </div>
-                
-                <div class="service-category">
-                    <h3>Equipment</h3>
-                    <ul>
-                        <li>Sony FX6 and/or ZV-E1</li>
-                        <li>Sachtler Video 15SB</li>
-                        <li>Professional Lighting Kit</li>
-                        <li>Nikkor Vintage Lenses</li>
-                    </ul>
+
+                <div class="form-actions">
+                    <button type="submit" class="cta-button">Send Inquiry</button>
                 </div>
-                
-                <div class="service-category">
-                    <h3>Coverage Area</h3>
-                    <ul>
-                        <li>Arizona (Local)</li>
-                        <li>US</li>
-                        <li>FR</li>
-                        <li>UK</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="contact-cta">
-                <p>Ready to start your project?</p>
-                <a href="mailto:max.boissiere@picture-up.co?subject=Project Inquiry" 
-                   class="cta-button" 
-                   onclick="handleContactClick(event, 'max.boissiere@picture-up.co')">Get in Touch</a>
-            </div>
+            </form>
         </div>
     </div>
 

@@ -87,6 +87,32 @@
             }
         });
     }
+
+    // Public helper to open contact section from CTA
+    function openContactSection() {
+        // Save previous non-contact index if needed
+        if (filterStates[currentFilterIndex]?.filter !== 'contact') {
+            prevNonContactIndex = currentFilterIndex;
+        }
+        // Force open immediately for reliability
+        try {
+            const plusIcon = document.getElementById('galleryPlusIcon');
+            const section = document.getElementById('contactSection');
+            if (plusIcon) plusIcon.classList.add('active');
+            if (section) section.classList.add('active');
+        } catch {}
+        // Also set filter so gallery UI matches state
+        setFilterByKey('contact');
+        try {
+            const el = document.getElementById('contactSection');
+            if (el) {
+                el.setAttribute('tabindex', '-1');
+                el.focus({ preventScroll: true });
+                setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+            }
+        } catch {}
+    }
+    window.openContactSection = openContactSection;
     
     // Sequential loading animation
     function initSequentialLoading() {
@@ -272,6 +298,7 @@
         if (filterToggle) setFilterToggleUI(filterToggle, filterText, state);
         try { localStorage.setItem('portfolioFilterIndex', String(currentFilterIndex)); } catch {}
         applySimpleFilter(state.filter);
+        syncServiceChips(state.filter);
     }
 
     // Filter functionality
@@ -290,23 +317,23 @@
         const filterToggle = document.getElementById('filterToggle');
         const filterText = document.querySelector('.filter-text');
         
-        if (!filterToggle) return;
-        
         if (savedIndex !== null) {
             const index = parseInt(savedIndex, 10);
             if (index >= 0 && index < filterStates.length) {
                 currentFilterIndex = index;
                 const currentState = filterStates[currentFilterIndex];
                 
-                setFilterToggleUI(filterToggle, filterText, currentState);
+                if (filterToggle) setFilterToggleUI(filterToggle, filterText, currentState);
                 
                 // Apply filter with simple CSS Grid approach
                 applySimpleFilter(currentState.filter);
+                syncServiceChips(currentState.filter);
             }
         } else {
             // No saved state: ensure default '*' is applied to sync UI and layout
-            setFilterToggleUI(filterToggle, filterText, filterStates[0]);
+            if (filterToggle) setFilterToggleUI(filterToggle, filterText, filterStates[0]);
             applySimpleFilter('*');
+            syncServiceChips('*');
         }
     }
     
@@ -381,39 +408,23 @@
         let filterToggle = document.getElementById('filterToggle');
         let filterText = document.querySelector('.filter-text');
         
-    // If filter elements don't exist yet, wait for header to load
-    if (!filterToggle) {
-            document.addEventListener('headerLoaded', () => {
-                filterToggle = document.getElementById('filterToggle');
-                filterText = document.querySelector('.filter-text');
-                if (filterToggle) {
-            setupFilterLogic();
+        // If header filter is absent, just restore state and skip wiring header UI
+        if (!filterToggle) {
             restoreFilterState();
-                }
-            });
             return;
         }
         
-    setupFilterLogic();
-    restoreFilterState();
+        setupFilterLogic();
+        restoreFilterState();
         
         function setupFilterLogic() {
             if (!gallery || !filterToggle) return;
             
-            function saveFilterState() {
-                localStorage.setItem('portfolioFilterIndex', currentFilterIndex.toString());
-            }
+            function saveFilterState() { localStorage.setItem('portfolioFilterIndex', currentFilterIndex.toString()); }
             
             filterToggle.addEventListener('click', (event) => {
                 // Create sparks at click position (with error handling)
-                try {
-                    const rect = filterToggle.getBoundingClientRect();
-                    const x = event.clientX || rect.left + rect.width / 2;
-                    const y = event.clientY || rect.top + rect.height / 2;
-                    createSparks(x, y);
-                } catch (sparkError) {
-                    console.warn('Sparks animation failed:', sparkError);
-                }
+                try { const rect = filterToggle.getBoundingClientRect(); const x = event.clientX || rect.left + rect.width / 2; const y = event.clientY || rect.top + rect.height / 2; createSparks(x, y); } catch {}
                 
                 const wasContact = filterStates[currentFilterIndex]?.filter === 'contact';
                 const prevIndex = currentFilterIndex;
@@ -573,15 +584,70 @@
     // Setup dynamic prev/next arrows on project/blog pages
     initDynamicProjectNavigation();
         initFullscreenViewer();
+    initServiceChipsFilter();
+        // Inject dynamic GMT offset for Arizona (America/Phoenix) beneath location
+        try { initIntroTimeZone(); } catch {}
         // Try to attach immediately in case header is already in DOM
         attachLogoResetBehavior();
         
         // Initialize gallery features
         initializeGalleryFeatures();
+
+        // If URL targets the contact section (e.g., after form submit), open it
+        if (window.location.hash === '#contactSection') {
+            setTimeout(() => {
+                try { openContactSection(); } catch {}
+            }, 50);
+        }
     });
 
     // Also attach when the header signals it has been injected
     document.addEventListener('headerLoaded', attachLogoResetBehavior);
+
+    // ================================
+    // Intro time zone (Arizona / America/Phoenix) dynamic GMT offset
+    // ================================
+    function getTimeZoneOffsetMinutes(timeZone, date = new Date()) {
+        // Returns offset minutes relative to UTC (e.g., -420 for GMT-7)
+        const dtf = new Intl.DateTimeFormat('en-US', {
+            timeZone,
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            hour12: false
+        });
+        const parts = dtf.formatToParts(date);
+        const map = {};
+        for (const { type, value } of parts) {
+            if (type !== 'literal') map[type] = value;
+        }
+        const asUTC = Date.UTC(
+            Number(map.year),
+            Number(map.month) - 1,
+            Number(map.day),
+            Number(map.hour),
+            Number(map.minute),
+            Number(map.second)
+        );
+        const asTS = date.getTime();
+        return (asUTC - asTS) / 60000;
+    }
+
+    function initIntroTimeZone() {
+        const el = document.querySelector('.intro-time');
+        if (!el) return;
+        try {
+            const offsetMin = Math.round(getTimeZoneOffsetMinutes('America/Phoenix'));
+            const sign = offsetMin > 0 ? '+' : (offsetMin < 0 ? '-' : '');
+            const abs = Math.abs(offsetMin);
+            const hours = Math.floor(abs / 60);
+            const minutes = abs % 60;
+            const pretty = minutes ? `${hours}:${String(minutes).padStart(2, '0')}` : `${hours}`;
+            el.textContent = `GMT ${sign}${pretty}`;
+            el.setAttribute('title', 'America/Phoenix');
+        } catch {
+            // Fallback: leave existing text (e.g., previously hardcoded)
+        }
+    }
     
     // Lusion.co-inspired fullscreen viewer with pixel peeping
     function initFullscreenViewer() {
@@ -1155,5 +1221,53 @@
             saveScrollStateForNextPage();
             // Don't prevent default; allow normal navigation
         }, true);
+    }
+
+
+    // ================================
+    // Service chips -> gallery filter bridge
+    // ================================
+    function initServiceChipsFilter() {
+        const chipList = document.querySelector('.service-chips');
+        if (!chipList) return;
+        const chips = chipList.querySelectorAll('li[data-filter]');
+        if (!chips.length) return;
+
+        const activate = (chip, evt) => {
+            const key = chip.getAttribute('data-filter') || '*';
+            // Map chip filters to gallery categories
+            // dp/editor/director/contact are supported; '*' shows all
+            // Create sparks at click/focus position similar to filter toggle
+            try {
+                const rect = chip.getBoundingClientRect();
+                const x = (evt && evt.clientX) ? evt.clientX : rect.left + rect.width / 2;
+                const y = (evt && evt.clientY) ? evt.clientY : rect.top + rect.height / 2;
+                createSparks(x, y);
+            } catch {}
+            setFilterByKey(key);
+        };
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', (e) => activate(chip, e));
+            chip.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    activate(chip, e);
+                }
+            });
+        });
+        // Initial sync (if restore ran before DOMContentLoaded, we sync again here)
+        const current = filterStates[currentFilterIndex]?.filter || '*';
+        syncServiceChips(current);
+    }
+
+    function syncServiceChips(activeKey) {
+        const chips = document.querySelectorAll('.service-chips li[data-filter]');
+        if (!chips.length) return;
+        chips.forEach(chip => {
+            const key = chip.getAttribute('data-filter');
+            const on = key === activeKey; // include '*' (All) as an active state
+            chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
     }
 })();
