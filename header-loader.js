@@ -48,6 +48,53 @@ function loadHeader() {
                 }, { capture: true }); // capture to run as early as possible
             }
         } catch {}
+
+        // Easter egg: text scramble on logo hover
+        try {
+            const logoLink = headerPlaceholder.querySelector('.logo a');
+            if (logoLink) {
+                const originalText = logoLink.textContent;
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
+                let scrambleInterval = null;
+
+                // Wrap each letter in a span
+                logoLink.innerHTML = originalText.split('').map(ch =>
+                    ch === ' '
+                        ? '<span class="logo-space"> </span>'
+                        : `<span class="logo-letter" data-char="${ch}">${ch}</span>`
+                ).join('');
+
+                const letters = logoLink.querySelectorAll('.logo-letter');
+
+                logoLink.addEventListener('mouseenter', () => {
+                    let iteration = 0;
+                    const totalIterations = letters.length * 3;
+                    if (scrambleInterval) clearInterval(scrambleInterval);
+
+                    scrambleInterval = setInterval(() => {
+                        letters.forEach((span, i) => {
+                            if (iteration >= i * 3) {
+                                span.textContent = span.dataset.char;
+                            } else {
+                                span.textContent = chars[Math.floor(Math.random() * chars.length)];
+                            }
+                        });
+                        iteration++;
+                        if (iteration > totalIterations) {
+                            clearInterval(scrambleInterval);
+                            scrambleInterval = null;
+                        }
+                    }, 50);
+                });
+
+                logoLink.addEventListener('mouseleave', () => {
+                    if (scrambleInterval) { clearInterval(scrambleInterval); scrambleInterval = null; }
+                    letters.forEach(span => {
+                        span.textContent = span.dataset.char;
+                    });
+                });
+            }
+        } catch {}
     }
 }
 

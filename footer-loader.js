@@ -11,7 +11,7 @@
                     <a href="https://soundcloud.com/quiet-4444" target="_blank" rel="noopener noreferrer">SoundCloud</a>
                     <a href="https://instagram.com/max.boissiere" target="_blank" rel="noopener noreferrer">Instagram</a>
                 </div>
-                <p>&copy; 2025 Max Boissiere. All rights reserved.</p>
+                <p>&copy; 2026 Max Boissiere. All rights reserved.</p>
             </div>
         </footer>
     `;

@@ -40,25 +40,6 @@
     }
 
     // ================================
-    // Gallery sibling-dimming (JS-driven to avoid gap-hover issues)
-    // ================================
-    function initGalleryDimming() {
-        const gallery = document.getElementById('gallery');
-        if (!gallery) return;
-        const items = gallery.querySelectorAll('.gallery-item');
-        items.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                gallery.classList.add('has-hover');
-                item.classList.add('hovered');
-            });
-            item.addEventListener('mouseleave', () => {
-                item.classList.remove('hovered');
-                gallery.classList.remove('has-hover');
-            });
-        });
-    }
-
-    // ================================
     // Scroll-triggered reveal animations
     // ================================
     function initScrollReveal() {
@@ -208,7 +189,7 @@
     
     // Sequential loading animation
     function initSequentialLoading() {
-        const loadItems = document.querySelectorAll('.load-item, h1, h2, h3, h4, h5, h6, p, .logo a, .nav-right, .back-link, .video-container, .detail-section, .still-item, .service-category');
+        const loadItems = document.querySelectorAll('.load-item, h1, h2, h3, h4, h5, h6, p, .logo a, .nav-right, .video-container, .detail-section, .still-item, .service-category');
         
         loadItems.forEach((item, index) => {
             setTimeout(() => {
@@ -310,15 +291,16 @@
     
     // Colorful sparks animation — enhanced with mix of dots and streaks
     function createSparks(x, y) {
-        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'];
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const colors = isDark ? ['#ffffff', '#e0e0e0', '#c0c0c0'] : ['#000000', '#1a1a1a', '#333333'];
         const sparkCount = 16;
 
         for (let i = 0; i < sparkCount; i++) {
             const spark = document.createElement('div');
             const color = colors[Math.floor(Math.random() * colors.length)];
             const isStreak = Math.random() > 0.5;
-            const size = isStreak ? `${2 + Math.random() * 2}px` : `${4 + Math.random() * 4}px`;
-            const w = isStreak ? `${10 + Math.random() * 14}px` : size;
+            const size = isStreak ? `${1 + Math.random() * 2}px` : `${4 + Math.random() * 4}px`;
+            const w = isStreak ? `${2 + Math.random() * 14}px` : size;
             spark.style.cssText = `
                 position:fixed;width:${w};height:${size};
                 background:${color};border-radius:${isStreak ? '2px' : '50%'};
@@ -650,7 +632,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         initTheme();
         initCursorDot();
-        initGalleryDimming();
         initContactSection();
         initSequentialLoading();
         initScrollReveal();
@@ -1368,4 +1349,23 @@
             chip.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
     }
+
+    // ================================
+    // Magnetic effect on filter chips
+    // ================================
+    (function initMagneticChips() {
+        const chips = document.querySelectorAll('.service-chips li');
+        const strength = 0.12;
+        chips.forEach(chip => {
+            chip.addEventListener('mousemove', e => {
+                const rect = chip.getBoundingClientRect();
+                const dx = e.clientX - (rect.left + rect.width / 2);
+                const dy = e.clientY - (rect.top + rect.height / 2);
+                chip.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+            });
+            chip.addEventListener('mouseleave', () => {
+                chip.style.transform = '';
+            });
+        });
+    })();
 })();
