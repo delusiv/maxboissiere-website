@@ -7,7 +7,7 @@ function loadHeader() {
         <nav>
             <div class="nav-left">
                 <div class="logo">
-                    <a href="${window.location.pathname.includes('/projects/') ? '../' : './'}">Home</a>
+                    <a href="${window.location.pathname.includes('/projects/') ? '../' : './'}">Max Boissiere</a>
                 </div>${filterContent}
             </div>
             <div class="nav-right">

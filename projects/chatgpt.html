@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('theme') || 
+            const savedTheme = localStorage.getItem('theme') ||
                 (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
@@ -20,47 +20,34 @@
 </head>
 <body>
     <div id="header-placeholder"></div>
-    
+
     <main class="project-page">
-        <div class="project-nav-top">
-            <a href="../" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Previous
-            </a>
-            <a href="granite-reef" class="next-link">
-                Next
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
+        <div id="nav-top"></div>
         <div class="project-hero">
             <h1>High-Key Horror</h1>
-            
+
             <div class="videos-container">
                 <div class="video-container">
-                    <iframe src="https://player.vimeo.com/video/1062627212?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-                            frameborder="0" 
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write" 
+                    <iframe src="https://player.vimeo.com/video/1062627212?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            frameborder="0"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
                             title="High-Key Horror">
                     </iframe>
                 </div>
             </div>
         </div>
-        
+
         <div class="project-details">
             <div class="detail-section">
                 <h3>About</h3>
                 <p>An experimental cinematography project that challenges horror genre conventions by using high-key lighting to create an unsettling atmosphere.</p>
             </div>
-            
+
             <div class="detail-section">
                 <h3>Role</h3>
                 <p>Director of Photography</p>
             </div>
-            
+
             <div class="detail-section">
                 <h3>Focus</h3>
                 <ul>
@@ -70,7 +57,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="stills-gallery">
             <h3>Still</h3>
             <div class="stills-grid">
@@ -79,23 +66,9 @@
                 </div>
             </div>
         </div>
-        
-        <div class="project-nav">
-            <a href="../" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Previous
-            </a>
-            <a href="granite-reef" class="next-link">
-                Next
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
-    </main>
 
+        <div id="nav-bottom"></div>
+    </main>
 
 <div id="footer-placeholder"></div>
     <script src="../footer-loader.js"></script>
@@ -103,5 +76,3 @@
 <script src="../script.js"></script>
 </body>
 </html>
-
-

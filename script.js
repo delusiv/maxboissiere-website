@@ -1,9 +1,101 @@
-// Max Boissiere - Ultra-Optimized JavaScript - Final Version
+// Max Boissiere - Awwwards-Level Portfolio
 (function() {
     'use strict';
-    
+
     // Ensure browser doesn't auto-restore on history in ways that conflict
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch {}
+
+    // ================================
+    // Custom cursor dot
+    // ================================
+    function initCursorDot() {
+        if (window.matchMedia('(pointer:coarse)').matches) return;
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        document.body.appendChild(dot);
+        let mx = -100, my = -100, dx = -100, dy = -100;
+
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            if (!dot.classList.contains('visible')) dot.classList.add('visible');
+        });
+        document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
+
+        (function render() {
+            dx += (mx - dx) * 0.12;
+            dy += (my - dy) * 0.12;
+            dot.style.left = dx + 'px';
+            dot.style.top = dy + 'px';
+            requestAnimationFrame(render);
+        })();
+
+        // Expand on hoverable elements
+        const hoverSelector = 'a, button, .gallery-item, .service-chips li, .cta-button, .still-item, .gallery-plus-item';
+        document.addEventListener('mouseover', e => {
+            if (e.target.closest(hoverSelector)) dot.classList.add('hovering');
+        });
+        document.addEventListener('mouseout', e => {
+            if (e.target.closest(hoverSelector)) dot.classList.remove('hovering');
+        });
+    }
+
+    // ================================
+    // Gallery sibling-dimming (JS-driven to avoid gap-hover issues)
+    // ================================
+    function initGalleryDimming() {
+        const gallery = document.getElementById('gallery');
+        if (!gallery) return;
+        const items = gallery.querySelectorAll('.gallery-item');
+        items.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                gallery.classList.add('has-hover');
+                item.classList.add('hovered');
+            });
+            item.addEventListener('mouseleave', () => {
+                item.classList.remove('hovered');
+                gallery.classList.remove('has-hover');
+            });
+        });
+    }
+
+    // ================================
+    // Scroll-triggered reveal animations
+    // ================================
+    function initScrollReveal() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.gallery-container, .project-details, .stills-gallery, .videos-container, .contact-form, footer').forEach(el => {
+            el.classList.add('reveal');
+            observer.observe(el);
+        });
+    }
+
+    // ================================
+    // Magnetic hover on buttons
+    // ================================
+    function initMagneticElements() {
+        if (window.matchMedia('(pointer:coarse)').matches) return;
+        document.querySelectorAll('.cta-button, .theme-toggle').forEach(el => {
+            el.addEventListener('mousemove', e => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                el.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = '';
+                el.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1)';
+                setTimeout(() => el.style.transition = '', 600);
+            });
+        });
+    }
 
     let customShuffle = null;
     let currentFilterIndex = 0;
@@ -146,17 +238,17 @@
         const galleryItems = gallery.querySelectorAll('.gallery-item');
         if (galleryItems.length === 0) return;
         
-        let columns = 4; // Default for desktop
-        
+        let columns = 3; // Default for desktop
+
         // Calculate responsive columns
         function updateLayout() {
             const screenWidth = window.innerWidth;
             if (screenWidth <= 480) {
                 columns = 1;
-            } else if (screenWidth <= 1024) {
+            } else if (screenWidth <= 768) {
                 columns = 2;
             } else {
-                columns = 4;
+                columns = 3;
             }
             layoutItems();
         }
@@ -172,22 +264,23 @@
             const paddingRight = parseFloat(containerStyle.paddingRight) || 0;
             const containerWidth = gallery.offsetWidth - paddingLeft - paddingRight;
             
-            const itemWidthPx = containerWidth / columns;
+            const gap = 16; // gap between tiles in px
+            const itemWidthPx = (containerWidth - gap * (columns - 1)) / columns;
             const itemHeight = itemWidthPx * (9/16); // 16:9 aspect ratio
-            
+
             visibleItems.forEach((item, index) => {
                 // Find the shortest column
                 const shortestColumn = columnHeights.indexOf(Math.min(...columnHeights));
-                
-                // Position the item (no offset needed since we're using the inner width)
-                const x = shortestColumn * itemWidthPx;
+
+                // Position the item with gap
+                const x = shortestColumn * (itemWidthPx + gap);
                 const y = columnHeights[shortestColumn];
-                
+
                 item.style.transform = `translate(${x}px, ${y}px)`;
-                item.style.width = `${itemWidthPx}px`; // Use pixel width instead of percentage
-                
-                // Update column height
-                columnHeights[shortestColumn] += itemHeight;
+                item.style.width = `${itemWidthPx}px`;
+
+                // Update column height (add gap below each tile)
+                columnHeights[shortestColumn] += itemHeight + gap;
             });
             
             // Set container height with bottom padding
@@ -215,57 +308,41 @@
         };
     }
     
-    // Colorful sparks animation for filter button
+    // Colorful sparks animation — enhanced with mix of dots and streaks
     function createSparks(x, y) {
         const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'];
-        const sparkCount = 12;
-        
+        const sparkCount = 16;
+
         for (let i = 0; i < sparkCount; i++) {
             const spark = document.createElement('div');
-            spark.className = 'filter-spark';
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const isStreak = Math.random() > 0.5;
+            const size = isStreak ? `${2 + Math.random() * 2}px` : `${4 + Math.random() * 4}px`;
+            const w = isStreak ? `${10 + Math.random() * 14}px` : size;
             spark.style.cssText = `
-                position: fixed;
-                width: 6px;
-                height: 6px;
-                background: ${colors[Math.floor(Math.random() * colors.length)]};
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                left: ${x}px;
-                top: ${y}px;
-                box-shadow: 0 0 6px currentColor;
+                position:fixed;width:${w};height:${size};
+                background:${color};border-radius:${isStreak ? '2px' : '50%'};
+                pointer-events:none;z-index:9999;
+                left:${x}px;top:${y}px;
+                box-shadow:0 0 8px ${color},0 0 16px ${color}40;
             `;
-            
+
             document.body.appendChild(spark);
-            
-            // Random direction and distance
-            const angle = (Math.PI * 2 * i) / sparkCount + (Math.random() - 0.5) * 0.5;
-            const distance = 50 + Math.random() * 100;
-            const duration = 800 + Math.random() * 400;
-            
-            const endX = x + Math.cos(angle) * distance;
-            const endY = y + Math.sin(angle) * distance;
-            
-            // Animate the spark
-            const animation = spark.animate([
-                {
-                    transform: 'translate(0, 0) scale(1)',
-                    opacity: 1
-                },
-                {
-                    transform: `translate(${endX - x}px, ${endY - y}px) scale(0)`,
-                    opacity: 0
-                }
+
+            const angle = (Math.PI * 2 * i) / sparkCount + (Math.random() - 0.5) * 0.6;
+            const distance = 40 + Math.random() * 120;
+            const duration = 600 + Math.random() * 600;
+            const dx = Math.cos(angle) * distance;
+            const dy = Math.sin(angle) * distance;
+            const rot = isStreak ? `rotate(${angle * 180 / Math.PI}deg)` : '';
+
+            spark.animate([
+                { transform: `translate(0,0) scale(1) ${rot}`, opacity: 1 },
+                { transform: `translate(${dx}px,${dy}px) scale(0) ${rot}`, opacity: 0 }
             ], {
-                duration: duration,
-                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-            });
-            
-            animation.onfinish = () => {
-                if (spark && spark.parentNode) {
-                    spark.parentNode.removeChild(spark);
-                }
-            };
+                duration,
+                easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+            }).onfinish = () => spark.remove();
         }
     }
 
@@ -493,7 +570,7 @@
     function showTooltip(element, message) {
         const originalText = element.getAttribute('data-original-text') || element.textContent;
         element.textContent = message;
-        element.style.backgroundColor = 'var(--accent)';
+        element.style.backgroundColor = 'var(--text)';
         element.style.color = 'white';
         
         setTimeout(() => {
@@ -572,8 +649,11 @@
     
     document.addEventListener('DOMContentLoaded', () => {
         initTheme();
+        initCursorDot();
+        initGalleryDimming();
         initContactSection();
         initSequentialLoading();
+        initScrollReveal();
         initBlogAnimations();
         initProjectDetailsAnimations();
     initLocalDevLinkFix();
@@ -581,7 +661,8 @@
     initScrollPreserver();
     // Build and persist project order from the gallery when available
     persistProjectOrderFromGallery();
-    // Setup dynamic prev/next arrows on project/blog pages
+    // Inject and setup project navigation
+    injectProjectNavs();
     initDynamicProjectNavigation();
         initFullscreenViewer();
     initServiceChipsFilter();
@@ -592,6 +673,9 @@
         
         // Initialize gallery features
         initializeGalleryFeatures();
+
+        // Magnetic hover on interactive elements (after DOM is populated)
+        setTimeout(initMagneticElements, 200);
 
         // If URL targets the contact section (e.g., after form submit), open it
         if (window.location.hash === '#contactSection') {
@@ -1152,6 +1236,20 @@
 
         // Re-run local dev link fix so .html is appended when needed
         try { initLocalDevLinkFix(); } catch {}
+    }
+
+    // ================================
+    // Auto-inject project navigation markup
+    // ================================
+    function injectProjectNavs() {
+        if (!/\/projects\//.test(window.location.pathname)) return;
+        const prevSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        const nextSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        const build = (cls) => `<div class="${cls}"><a href="../" class="back-link">${prevSvg} Previous</a><a href="../" class="next-link">Next ${nextSvg}</a></div>`;
+        const top = document.getElementById('nav-top');
+        const bot = document.getElementById('nav-bottom');
+        if (top) top.outerHTML = build('project-nav-top');
+        if (bot) bot.outerHTML = build('project-nav');
     }
 
     // ================================

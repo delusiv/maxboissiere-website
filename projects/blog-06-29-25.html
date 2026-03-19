@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('theme') || 
+            const savedTheme = localStorage.getItem('theme') ||
                 (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
@@ -20,30 +20,17 @@
 </head>
 <body>
     <div id="header-placeholder"></div>
-    
+
     <main class="blog-page">
-        <div class="project-nav-top">
-            <a href="../" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Previous
-            </a>
-            <a href="chatgpt" class="next-link">
-                Next
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12H19M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
-        
+        <div id="nav-top"></div>
+
         <div class="project-hero">
             <h1>Simulating 500T Dye Density in Resolve Using DCTLs</h1>
             <div class="blog-meta">
                 <span class="blog-date">June 29, 2025</span>
             </div>
         </div>
-        
+
         <article class="blog-content">
             <div class="blog-intro">
                 <p>I've been experimenting with recreating <strong>Kodak VISION3 500T (5219)</strong> in DaVinci Resolve, using <a href="https://github.com/thatcherfreeman/utility-dctls/blob/main/Effects/Dye%20Simulator.dctl" target="_blank" rel="noopener noreferrer">Thatcher Freeman's dye simulator DCTL</a>. My goal was simple: copy the curves from Kodak's own whitepapers and see if I could get an accurate film look. Spoiler alert — it wasn't that simple.</p>
@@ -52,7 +39,7 @@
             <section class="blog-section">
                 <h2>The Problem: Too Yellow, Too Green</h2>
                 <p>I started by plugging in the standard dye curves from Kodak's technical documentation for various stocks. I tried to be as accurate as possible but I couldn't shake the yellow-green cast it generated.</p>
-                
+
                 <div class="workflow-steps">
                     <div class="workflow-step">
                         <h3>Node 1 – Primary Dye Curves (First Attempt)</h3>
@@ -110,7 +97,7 @@
                     <img src="../gallery/dctl4.png" alt="Before and after comparison showing corrected color balance">
                 </div>
             </div>
-        </div>   
+        </div>
 
             <section class="blog-section">
                 <h2>Who Cares?</h2>
@@ -118,8 +105,6 @@
                     <p>TBH idk, I'm still testing how the overlaps in dye sensitivity affect the gamut. If you have any insights or experiences with this, I'd love to hear them!</p>
                 </div>
             </section>
-
-     
 
             <section class="blog-section">
                 <h2>Tools</h2>
@@ -131,23 +116,9 @@
                 </div>
             </section>
 
-          
         </article>
-        
-        <div class="project-nav">
-            <a href="../" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Previous
-            </a>
-            <a href="chatgpt" class="next-link">
-                Next
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12H19M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
+
+        <div id="nav-bottom"></div>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -158,7 +129,3 @@
     <script src="../script.js"></script>
 </body>
 </html>
-
-
-
-

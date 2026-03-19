@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         (function() {
-            const savedTheme = localStorage.getItem('theme') || 
+            const savedTheme = localStorage.getItem('theme') ||
                 (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
@@ -20,50 +20,37 @@
 </head>
 <body>
     <div id="header-placeholder"></div>
-    
+
     <main class="project-page">
-        <div class="project-nav-top">
-            <a href="../" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Previous
-            </a>
-            <a href="pj" class="next-link">
-                Next
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
-        
+        <div id="nav-top"></div>
+
         <div class="project-hero">
             <h1>REI Better Life Summit</h1>
-            
+
             <div class="videos-container">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/j5gJEp6hEvs" 
+                    <iframe src="https://www.youtube.com/embed/j5gJEp6hEvs"
                             title="REI Better Life Summit Coverage"
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen
                             loading="lazy">
                     </iframe>
                 </div>
             </div>
         </div>
-        
+
         <div class="project-details">
             <div class="detail-section">
                 <h3>About</h3>
                 <p>Event coverage and content creation for REI's Better Life Summit. Focused on pacing and storytelling across multiple content formats while meeting tight deadlines and brand requirements.</p>
             </div>
-            
+
             <div class="detail-section">
                 <h3>Role</h3>
                 <p>Editor</p>
             </div>
-            
+
             <div class="detail-section">
                 <h3>Deliverables</h3>
                 <ul>
@@ -74,7 +61,7 @@
                     <li>Fixing footage/audio issues</li>
                 </ul>
             </div>
-            
+
             <div class="detail-section">
                 <h3>Tools</h3>
                 <ul>
@@ -86,7 +73,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="stills-gallery">
             <h3>Stills</h3>
             <div class="stills-grid">
@@ -101,21 +88,8 @@
                 </div>
             </div>
         </div>
-        
-        <div class="project-nav">
-            <a href="../" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Previous
-            </a>
-            <a href="pj" class="next-link">
-                Next
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
+
+        <div id="nav-bottom"></div>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -124,4 +98,3 @@
     <script src="../script.js"></script>
 </body>
 </html>
-
