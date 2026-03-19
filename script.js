@@ -211,6 +211,42 @@
         });
     }
     
+    // Hover-to-play video on gallery items
+    function initGalleryHoverVideo() {
+        if (window.matchMedia('(pointer:coarse)').matches) return; // skip on touch devices
+        document.querySelectorAll('.gallery-item[data-video]').forEach(item => {
+            let video = null;
+            let hoverTimeout = null;
+
+            item.addEventListener('mouseenter', () => {
+                // Small delay so quick mouse passes don't trigger loads
+                hoverTimeout = setTimeout(() => {
+                    if (!video) {
+                        video = document.createElement('video');
+                        video.src = item.dataset.video;
+                        video.muted = true;
+                        video.loop = true;
+                        video.playsInline = true;
+                        video.preload = 'auto';
+                        // Insert before the overlay so overlay stays on top
+                        const link = item.querySelector('a');
+                        if (link) link.insertBefore(video, link.querySelector('.overlay'));
+                        else item.appendChild(video);
+                    }
+                    video.currentTime = 0;
+                    video.play().catch(() => {});
+                }, 150);
+            });
+
+            item.addEventListener('mouseleave', () => {
+                clearTimeout(hoverTimeout);
+                if (video) {
+                    video.pause();
+                }
+            });
+        });
+    }
+
     // Custom Shuffle.js-like implementation
     function initCustomShuffle() {
         const gallery = document.getElementById('gallery');
@@ -654,6 +690,7 @@
         
         // Initialize gallery features
         initializeGalleryFeatures();
+        initGalleryHoverVideo();
 
         // Magnetic hover on interactive elements (after DOM is populated)
         setTimeout(initMagneticElements, 200);
