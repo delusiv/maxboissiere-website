@@ -269,7 +269,7 @@ footer{margin-top:8rem;padding:3rem;text-align:center;border-top:1px solid var(-
 .footer-social{display:flex;align-items:center;justify-content:center;gap:2.5rem;margin-bottom:0.5rem}
 .footer-social a{color:var(--text);opacity:0.3!important;transition:all 0.3s ease;font-size:0.75rem;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;transform:none!important}
 .footer-social a:hover{opacity:1!important}
-.footer-content p{font-size:0.65rem;font-weight:300;opacity:0.2!important;color:var(--text);text-align:center;transform:none!important;letter-spacing:0.04em;text-transform:uppercase}
+.footer-content p{font-size:0.65rem;font-weight:300;opacity:0.3!important;color:var(--text);text-align:center;transform:none!important;letter-spacing:0.04em;text-transform:uppercase}
 
 /* ========== RESPONSIVE ========== */
 @media(max-width:1024px)and(min-width:769px){
