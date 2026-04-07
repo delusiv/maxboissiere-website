@@ -1386,22 +1386,4 @@
         });
     }
 
-    // ================================
-    // Magnetic effect on filter chips
-    // ================================
-    (function initMagneticChips() {
-        const chips = document.querySelectorAll('.service-chips li');
-        const strength = 0.12;
-        chips.forEach(chip => {
-            chip.addEventListener('mousemove', e => {
-                const rect = chip.getBoundingClientRect();
-                const dx = e.clientX - (rect.left + rect.width / 2);
-                const dy = e.clientY - (rect.top + rect.height / 2);
-                chip.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
-            });
-            chip.addEventListener('mouseleave', () => {
-                chip.style.transform = '';
-            });
-        });
-    })();
 })();

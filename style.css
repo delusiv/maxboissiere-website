@@ -101,8 +101,8 @@ main{overflow-x:hidden}
 .featured-reel-video iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 
 /* ========== REEL ========== */
-.reel-section{max-width:var(--max);margin:0 auto;padding:0 3rem 4rem}
-.reel-video-container{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden}
+.reel-section{max-width:var(--max);margin:0 auto;padding:0 3rem 4rem;display:flex;align-items:center;min-height:calc(100vh - 10rem)}
+.reel-video-container{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;flex-shrink:0}
 .reel-video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 
 /* ========== GALLERY ========== */
