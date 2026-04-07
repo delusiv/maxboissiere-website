@@ -49,49 +49,59 @@ function loadHeader() {
             }
         } catch {}
 
-        // Easter egg: text scramble on logo hover
+        // Back to Gallery hover animation
         try {
             const logoLink = headerPlaceholder.querySelector('.logo a');
-            if (logoLink) {
-                const originalText = logoLink.textContent;
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
-                let scrambleInterval = null;
-
-                // Wrap each letter in a span
-                logoLink.innerHTML = originalText.split('').map(ch =>
-                    ch === ' '
-                        ? '<span class="logo-space"> </span>'
-                        : `<span class="logo-letter" data-char="${ch}">${ch}</span>`
+            if (logoLink && logoLink.textContent.trim() === 'Back to Gallery') {
+                logoLink.innerHTML = 'Back to Gallery'.split('').map(ch =>
+                    ch === ' ' ? '<span class="logo-space"> </span>'
+                               : `<span class="logo-letter">${ch}</span>`
                 ).join('');
 
-                const letters = logoLink.querySelectorAll('.logo-letter');
+                const letters = [...logoLink.querySelectorAll('.logo-letter')];
+                letters.forEach(l => { l.style.transition = 'opacity 0.3s ease'; });
 
-                logoLink.addEventListener('mouseenter', () => {
-                    let iteration = 0;
-                    const totalIterations = letters.length * 3;
-                    if (scrambleInterval) clearInterval(scrambleInterval);
-
-                    scrambleInterval = setInterval(() => {
-                        letters.forEach((span, i) => {
-                            if (iteration >= i * 3) {
-                                span.textContent = span.dataset.char;
-                            } else {
-                                span.textContent = chars[Math.floor(Math.random() * chars.length)];
-                            }
-                        });
-                        iteration++;
-                        if (iteration > totalIterations) {
-                            clearInterval(scrambleInterval);
-                            scrambleInterval = null;
-                        }
-                    }, 50);
+                logoLink.addEventListener('mousemove', (e) => {
+                    letters.forEach(l => {
+                        const rect = l.getBoundingClientRect();
+                        const cx = rect.left + rect.width / 2;
+                        const dist = Math.abs(e.clientX - cx);
+                        const radius = 80;
+                        l.style.opacity = dist < radius ? 1 - (dist / radius) * 0.75 : 0.25;
+                    });
                 });
 
                 logoLink.addEventListener('mouseleave', () => {
-                    if (scrambleInterval) { clearInterval(scrambleInterval); scrambleInterval = null; }
-                    letters.forEach(span => {
-                        span.textContent = span.dataset.char;
+                    letters.forEach(l => { l.style.opacity = ''; });
+                });
+            }
+        } catch {}
+
+        // Per-letter opacity animation on logo
+        try {
+            const logoLink = headerPlaceholder.querySelector('.logo a');
+            if (logoLink && logoLink.textContent.trim() === 'Max Boissiere') {
+                logoLink.innerHTML = 'Max Boissiere'.split('').map(ch =>
+                    ch === ' ' ? '<span class="logo-space"> </span>'
+                               : `<span class="logo-letter">${ch}</span>`
+                ).join('');
+
+                const letters = [...logoLink.querySelectorAll('.logo-letter')];
+                letters.forEach(l => { l.style.transition = 'opacity 0.3s ease'; });
+
+                logoLink.addEventListener('mousemove', (e) => {
+                    letters.forEach(l => {
+                        const rect = l.getBoundingClientRect();
+                        const cx = rect.left + rect.width / 2;
+                        const dist = Math.abs(e.clientX - cx);
+                        const radius = 80;
+                        const opacity = dist < radius ? 1 - (dist / radius) * 0.75 : 0.25;
+                        l.style.opacity = opacity;
                     });
+                });
+
+                logoLink.addEventListener('mouseleave', () => {
+                    letters.forEach(l => { l.style.opacity = ''; });
                 });
             }
         } catch {}
