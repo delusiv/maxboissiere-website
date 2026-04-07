@@ -269,6 +269,22 @@ main{overflow-x:hidden}
 .workflow-list{list-style:none;margin:2rem 0}
 .workflow-list li{padding:1rem 0;padding-left:2rem;font-weight:300;opacity:0.6;line-height:1.7}
 
+/* ========== INSTAGRAM CAROUSEL ========== */
+.instagram-section{margin:4rem 0 2rem;position:relative}
+.instagram-section::before{content:'';position:absolute;top:-2rem;left:0;width:40px;height:1px;background:var(--border)}
+.instagram-section-label{font-size:0.7rem;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;color:var(--text);opacity:0.35;margin-bottom:1.5rem}
+.instagram-carousel-wrap{position:relative}
+.instagram-carousel{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none;cursor:grab}
+.instagram-carousel:active{cursor:grabbing}
+.instagram-carousel::-webkit-scrollbar{display:none}
+.instagram-carousel-item{flex:0 0 auto;scroll-snap-align:start;width:320px}
+.instagram-carousel-item .instagram-media{margin:0!important;min-width:unset!important;max-width:320px!important}
+.instagram-carousel-arrows{display:flex;gap:0.5rem;margin-top:1rem}
+.ig-arrow{background:0;border:1px solid var(--border);color:var(--text);cursor:pointer;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;opacity:0.4;transition:opacity 0.3s ease,border-color 0.3s ease;border-radius:0}
+.ig-arrow:hover{opacity:1;border-color:var(--text)}
+.ig-arrow svg{width:14px;height:14px;flex-shrink:0}
+@media(max-width:768px){.instagram-carousel-item{width:280px}}
+
 /* ========== FOOTER ========== */
 footer{margin-top:8rem;padding:3rem;text-align:center;border-top:1px solid var(--border)}
 .footer-content{max-width:var(--max);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:1.5rem}
