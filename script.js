@@ -6,38 +6,9 @@
     try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch {}
 
     // ================================
-    // Custom cursor dot
+    // Custom cursor dot (removed)
     // ================================
-    function initCursorDot() {
-        if (window.matchMedia('(pointer:coarse)').matches) return;
-        const dot = document.createElement('div');
-        dot.className = 'cursor-dot';
-        document.body.appendChild(dot);
-        let mx = -100, my = -100, dx = -100, dy = -100;
-
-        document.addEventListener('mousemove', e => {
-            mx = e.clientX; my = e.clientY;
-            if (!dot.classList.contains('visible')) dot.classList.add('visible');
-        });
-        document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
-
-        (function render() {
-            dx += (mx - dx) * 0.12;
-            dy += (my - dy) * 0.12;
-            dot.style.left = dx + 'px';
-            dot.style.top = dy + 'px';
-            requestAnimationFrame(render);
-        })();
-
-        // Expand on hoverable elements
-        const hoverSelector = 'a, button, .gallery-item, .service-chips li, .cta-button, .still-item, .gallery-plus-item';
-        document.addEventListener('mouseover', e => {
-            if (e.target.closest(hoverSelector)) dot.classList.add('hovering');
-        });
-        document.addEventListener('mouseout', e => {
-            if (e.target.closest(hoverSelector)) dot.classList.remove('hovering');
-        });
-    }
+    function initCursorDot() {}
 
     // ================================
     // Scroll-triggered reveal animations
@@ -82,7 +53,7 @@
     let currentFilterIndex = 0;
     let prevNonContactIndex = 0; // track last non-contact filter index
     const filterStates = [
-        { filter: '*', text: 'All' },
+        { filter: 'reel', text: 'Reel' },
         { filter: 'dp', text: 'Director of Photography' },
         { filter: 'editor', text: 'Video Editor' },
         { filter: 'director', text: 'Director' },
@@ -135,7 +106,7 @@
             const currentKey = filterStates[currentFilterIndex]?.filter;
             if (currentKey === 'contact') {
                 // Requirement: when contact is open and plus is clicked, reset to default
-                setFilterByKey('*');
+                setFilterByKey('reel');
             } else {
                 // Remember current non-contact before entering contact
                 if (currentKey !== 'contact') prevNonContactIndex = currentFilterIndex;
@@ -155,7 +126,7 @@
         // Close on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && filterStates[currentFilterIndex]?.filter === 'contact') {
-                const fallbackKey = filterStates[prevNonContactIndex]?.filter || '*';
+                const fallbackKey = filterStates[prevNonContactIndex]?.filter || 'reel';
                 setFilterByKey(fallbackKey);
             }
         });
@@ -228,13 +199,26 @@
                         video.loop = true;
                         video.playsInline = true;
                         video.preload = 'auto';
+                        video.style.opacity = '0';
                         // Insert before the overlay so overlay stays on top
                         const link = item.querySelector('a');
                         if (link) link.insertBefore(video, link.querySelector('.overlay'));
                         else item.appendChild(video);
                     }
-                    video.currentTime = 0;
-                    video.play().catch(() => {});
+                    video.style.opacity = '0';
+                    if (video.currentTime === 0) {
+                        video.play().then(() => {
+                            requestAnimationFrame(() => { video.style.opacity = ''; });
+                        }).catch(() => {});
+                    } else {
+                        video.onseeked = () => {
+                            video.onseeked = null;
+                            video.play().then(() => {
+                                requestAnimationFrame(() => { video.style.opacity = ''; });
+                            }).catch(() => {});
+                        };
+                        video.currentTime = 0;
+                    }
                 }, 150);
             });
 
@@ -293,7 +277,7 @@
                 const x = shortestColumn * (itemWidthPx + gap);
                 const y = columnHeights[shortestColumn];
 
-                item.style.transform = `translate(${x}px, ${y}px)`;
+                item.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
                 item.style.width = `${itemWidthPx}px`;
 
                 // Update column height (add gap below each tile)
@@ -369,7 +353,7 @@
         if (!filterToggle) return;
         const filterIcon = filterToggle.querySelector('svg');
         if (filterText) {
-            if (state.filter === '*') {
+            if (state.filter === 'reel') {
                 if (filterIcon) filterIcon.style.display = 'block';
                 filterText.style.display = 'none';
                 filterText.textContent = '';
@@ -403,7 +387,7 @@
             const forceDefault = sessionStorage.getItem('forceDefaultFilterV1');
             if (forceDefault === '1') {
                 sessionStorage.removeItem('forceDefaultFilterV1');
-                setFilterByKey('*');
+                setFilterByKey('reel');
                 return;
             }
         } catch {}
@@ -425,10 +409,10 @@
                 syncServiceChips(currentState.filter);
             }
         } else {
-            // No saved state: ensure default '*' is applied to sync UI and layout
+            // No saved state: ensure default 'reel' is applied to sync UI and layout
             if (filterToggle) setFilterToggleUI(filterToggle, filterText, filterStates[0]);
-            applySimpleFilter('*');
-            syncServiceChips('*');
+            applySimpleFilter('reel');
+            syncServiceChips('reel');
         }
     }
     
@@ -436,18 +420,33 @@
         const galleryItems = document.querySelectorAll('.gallery-item');
         const contactSection = document.getElementById('contactSection');
         const plusIcon = document.getElementById('galleryPlusIcon');
-        
+        const reelSection = document.getElementById('reelSection');
+        const gallery = document.getElementById('gallery');
+
+        // Handle reel filter
+        if (filter === 'reel') {
+            galleryItems.forEach(item => item.classList.remove('loaded'));
+            setTimeout(() => {
+                if (gallery) gallery.style.display = 'none';
+                if (reelSection) reelSection.style.display = '';
+            }, 200);
+            return;
+        } else {
+            if (reelSection) reelSection.style.display = 'none';
+            if (gallery) gallery.style.display = '';
+        }
+
         // First, fade out all items
         galleryItems.forEach(item => {
             item.classList.remove('loaded');
         });
-        
+
         // After fade out, apply filter and re-layout
         setTimeout(() => {
             galleryItems.forEach(item => {
                 const category = item.dataset.category;
                 const isPlusItem = item.classList.contains('gallery-plus-item');
-                
+
                 if (filter === 'contact') {
                     // Contact state: show only plus button
                     if (isPlusItem) {
@@ -455,7 +454,7 @@
                     } else {
                         item.classList.add('hidden');
                     }
-                } else if (filter === '*' || isPlusItem || category === filter) {
+                } else if (isPlusItem || category === filter) {
                     item.classList.remove('hidden');
                 } else {
                     item.classList.add('hidden');
@@ -660,7 +659,7 @@
             // If the current filter is contact, reset to default before navigation
             if (filterStates[currentFilterIndex]?.filter === 'contact') {
                 try { sessionStorage.setItem('forceDefaultFilterV1', '1'); } catch {}
-                setFilterByKey('*');
+                setFilterByKey('reel');
             }
         });
     }
@@ -1373,7 +1372,7 @@
             });
         });
         // Initial sync (if restore ran before DOMContentLoaded, we sync again here)
-        const current = filterStates[currentFilterIndex]?.filter || '*';
+        const current = filterStates[currentFilterIndex]?.filter || 'reel';
         syncServiceChips(current);
     }
 

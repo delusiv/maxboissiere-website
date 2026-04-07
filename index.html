@@ -23,42 +23,63 @@
     <div id="header-placeholder"></div>
     
     <main role="main" aria-label="Portfolio gallery">
+        <!-- <section class="featured-reel" aria-label="Featured reel">
+            <div class="featured-reel-inner">
+                <div class="featured-reel-video">
+                    <iframe src="https://player.vimeo.com/video/1180727658?autoplay=1&loop=1&muted=1&background=1&badge=0&title=0&byline=0&portrait=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen title="Featured Reel"></iframe>
+                </div>
+            </div>
+        </section> -->
+
         <!-- Intro Section / About -->
         <section class="intro-hero load-item" aria-label="About Max and services">
                     <ul class="service-chips" aria-label="Filter projects by service">
-                        <li role="button" tabindex="0" data-filter="*" aria-pressed="false">All</li>
+                        <li role="button" tabindex="0" data-filter="reel" aria-pressed="false">Reel</li>
                         <li role="button" tabindex="0" data-filter="dp" aria-pressed="false">Cinematography</li>
                         <li role="button" tabindex="0" data-filter="editor" aria-pressed="false">Editing</li>
                         <li role="button" tabindex="0" data-filter="director" aria-pressed="false">Directing</li>
                     </ul>
         </section>
-        
+
         <h1 class="visually-hidden">Max Boissiere Cinematography Portfolio</h1>
-        
+
+        <div id="reelSection" class="reel-section" style="display:none;">
+            <div class="reel-video-container">
+                <iframe src="https://player.vimeo.com/video/1180727658?badge=0&title=0&byline=0&portrait=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen title="Featured Reel"></iframe>
+            </div>
+        </div>
+
         <div id="gallery" class="gallery-container" role="grid" aria-label="Portfolio projects grid">
 
-            <!-- <div class="gallery-item" data-category="dp" role="gridcell">
-                <a href="projects/hempinnov" aria-label="Hemp Innovations LLC">
-                    <img src="gallery/hi1.png" alt="Hemp Innovations LLC still" loading="lazy">
-                    <div class="overlay">Hemp Innovations LLC</div>
+            <div class="gallery-item" data-category="dp" data-video="gallery/pitajungle1.mov" role="gridcell">
+                <a href="projects/pitajungle" aria-label="Pita Jungle project">
+                    <img src="gallery/pita1.png" alt="Pita Jungle project still" loading="lazy">
+                    <div class="overlay">Pita Jungle</div>
                 </a>
             </div>
 
-            <div class="gallery-item" data-category="dp" role="gridcell">
-                <a href="projects/pitajungle" aria-label="Pita Jungle project">
-                    <img src="gallery/pitajungle1.png" alt="Pita Jungle documentary project still" loading="lazy">
-                    <div class="overlay">Pita Jungle</div>
+            <div class="gallery-item" data-category="dp" data-video="gallery/shaghf2.mov" role="gridcell">
+                <a href="projects/shaghf" aria-label="Shaghf Cafe project">
+                    <img src="gallery/shaghf1.png" alt="Shaghf Cafe project still" loading="lazy">
+                    <div class="overlay">Shaghf Cafe</div>
                 </a>
-            </div> -->
+            </div>
 
-             <div class="gallery-item" data-category="dp" data-video="gallery/acyr.mp4" role="gridcell">
+            <div class="gallery-item" data-category="dp" data-video="gallery/fadetherapy2.mov" role="gridcell">
+                <a href="projects/fadetherapy" aria-label="Fade Therapy project">
+                    <img src="gallery/fade1.png" alt="Fade Therapy project still" loading="lazy">
+                    <div class="overlay">Fade Therapy</div>
+                </a>
+            </div>
+
+             <div class="gallery-item" data-category="dp" data-video="gallery/acyr.mov" role="gridcell">
                 <a href="projects/acyr" aria-label="Arizona Center for Youth Resources project">
-                    <img src="gallery/acyr1.png" alt="Arizona Center for Youth Resources documentary project still" loading="lazy">
+                    <img src="gallery/acyrcover.png" alt="Arizona Center for Youth Resources documentary project still" loading="lazy">
                     <div class="overlay">Arizona Center for Youth Resources</div>
                 </a>
             </div>
 
-            <div class="gallery-item" data-category="editor" data-video="gallery/rei.mp4" role="gridcell">
+            <div class="gallery-item" data-category="editor" data-video="gallery/reisummit.mov" role="gridcell">
                 <a href="projects/rei" aria-label="REI Better Life Summit project">
                     <img src="gallery/rei1.png" alt="REI Better Life Summit video project still" loading="lazy">
                     <div class="overlay">REI Better Life Summit</div>
