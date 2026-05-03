@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild BBQ - Max Boissiere</title>
+    <meta name="description" content="Cinematography project for Wild BBQ.">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') ||
+                (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <link rel="stylesheet" href="../style.css">
+    <script src="../header-loader.js"></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="project-page">
+        <div id="nav-top"></div>
+
+        <div class="project-hero">
+            <h1>Wild BBQ</h1>
+        </div>
+
+        <div class="project-details">
+            <div class="detail-section">
+                <h3>About</h3>
+                <p>Cinematography project for Wild BBQ.</p>
+            </div>
+
+            <div class="detail-section">
+                <h3>Role</h3>
+                <p>Director of Photography</p>
+            </div>
+        </div>
+
+        <div class="instagram-section">
+            <p class="instagram-section-label">On Instagram</p>
+            <div class="instagram-carousel-wrap">
+                <div class="instagram-carousel" id="ig-carousel-wbbq">
+
+                    <div class="instagram-carousel-item">
+                        <blockquote class="instagram-media"
+                            data-instgrm-permalink="https://www.instagram.com/reel/DVWyZZ2Evmg/"
+                            data-instgrm-version="14"
+                            style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:1px;max-width:320px;min-width:280px;padding:0;width:calc(100% - 2px)">
+                        </blockquote>
+                    </div>
+
+                    <div class="instagram-carousel-item">
+                        <blockquote class="instagram-media"
+                            data-instgrm-permalink="https://www.instagram.com/reel/DVXNX9AAdmH/"
+                            data-instgrm-version="14"
+                            style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:1px;max-width:320px;min-width:280px;padding:0;width:calc(100% - 2px)">
+                        </blockquote>
+                    </div>
+
+                    <div class="instagram-carousel-item">
+                        <blockquote class="instagram-media"
+                            data-instgrm-permalink="https://www.instagram.com/reel/DVesMgSEiNF/"
+                            data-instgrm-version="14"
+                            style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:1px;max-width:320px;min-width:280px;padding:0;width:calc(100% - 2px)">
+                        </blockquote>
+                    </div>
+
+                    <div class="instagram-carousel-item">
+                        <blockquote class="instagram-media"
+                            data-instgrm-permalink="https://www.instagram.com/reel/DVnRy1aD5xA/"
+                            data-instgrm-version="14"
+                            style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,.5),0 1px 10px 0 rgba(0,0,0,.15);margin:1px;max-width:320px;min-width:280px;padding:0;width:calc(100% - 2px)">
+                        </blockquote>
+                    </div>
+
+                </div>
+                <div class="instagram-carousel-arrows">
+                    <button class="ig-arrow" onclick="document.getElementById('ig-carousel-wbbq').scrollBy({left:-340,behavior:'smooth'})" aria-label="Scroll left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button class="ig-arrow" onclick="document.getElementById('ig-carousel-wbbq').scrollBy({left:340,behavior:'smooth'})" aria-label="Scroll right">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script async src="//www.instagram.com/embed.js"></script>
+
+        <div id="nav-bottom"></div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../footer-loader.js"></script>
+
+    <script src="../script.js"></script>
+</body>
+</html>

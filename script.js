@@ -79,8 +79,10 @@
             
             // Change theme during the exchange (when outgoing icon is halfway down)
             setTimeout(() => {
+                document.documentElement.classList.add('theme-transitioning');
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
+                setTimeout(() => document.documentElement.classList.remove('theme-transitioning'), 350);
             }, 400);
             
             // Remove animation class after animation completes
