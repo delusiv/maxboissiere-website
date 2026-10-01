@@ -10,6 +10,7 @@ function loadFooter() {
                 <li><a href="https://youtube.com/@max.boissiere" target="_blank" rel="noopener noreferrer">YouTube</a></li>
                 <li><a href="https://instagram.com/max.boissiere" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                 <li><a href="https://soundcloud.com/quiet-4444" target="_blank" rel="noopener noreferrer">SoundCloud</a></li>
+                <li><a href="mailto:max.boissiere@pictureup.co">Email</a></li>
             </ul>
             <p class="ft-copy">&copy; ${new Date().getFullYear()} Max Boissiere.<br>All rights reserved.</p>
             <a class="ft-top" href="#top">Back to top <span aria-hidden="true">&uarr;</span></a>

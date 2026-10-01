@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Max Boissiere — Cinematographer</title>
     <meta name="description" content="Max Boissiere is an Arizona-based cinematographer for narrative, commercial and documentary work. Also available for corporate editing — clients include ASU, REI and NAMI.">
+    <link rel="canonical" href="https://maxboissiere.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Max Boissiere">
+    <meta property="og:title" content="Max Boissiere — Cinematographer">
+    <meta property="og:description" content="Max Boissiere is an Arizona-based cinematographer for narrative, commercial and documentary work. Also available for corporate editing — clients include ASU, REI and NAMI.">
+    <meta property="og:url" content="https://maxboissiere.com/">
+    <meta property="og:image" content="https://maxboissiere.com/gallery/og/sah1.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="keywords" content="cinematographer, director of photography, narrative, commercial, documentary, Arizona, Phoenix, corporate video editor, portfolio">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,8 +52,8 @@
                     <li>Documentary</li>
                 </ul>
                 <div class="hero-actions">
-                    <button type="button" class="hero-btn" id="playReel"><span class="dot" aria-hidden="true"></span>Play with sound</button>
                     <a class="hero-btn" href="#work">View work <span aria-hidden="true">&darr;</span></a>
+                    <button type="button" class="hero-btn" id="pauseReel" hidden><span class="pause-label">Pause reel</span> <span class="pause-icon" aria-hidden="true">&#10074;&#10074;</span></button>
                 </div>
             </div>
 
@@ -66,6 +76,7 @@
             <ol id="gallery" class="work-grid">
                 <li class="work-item" data-category="narrative">
                     <a href="projects/sah">
+                        <img class="work-img" src="gallery/sah1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">Something About Him</span>
                         <span class="work-role">Narrative</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -73,6 +84,7 @@
                 </li>
                 <li class="work-item" data-category="documentary">
                     <a href="projects/acyr">
+                        <img class="work-img" src="gallery/acyr1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">Arizona Center for Youth Resources</span>
                         <span class="work-role">Documentary</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -80,6 +92,7 @@
                 </li>
                 <li class="work-item" data-category="commercial">
                     <a href="projects/pitajungle">
+                        <img class="work-img" src="gallery/pita1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">Pita Jungle</span>
                         <span class="work-role">Commercial</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -87,6 +100,7 @@
                 </li>
                 <li class="work-item" data-category="narrative">
                     <a href="projects/chatgpt">
+                        <img class="work-img" src="gallery/gpt1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">High-Key Horror</span>
                         <span class="work-role">Narrative</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -94,6 +108,7 @@
                 </li>
                 <li class="work-item" data-category="commercial">
                     <a href="projects/wildbbq">
+                        <img class="work-img" src="gallery/wildbbq1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">Wild BBQ</span>
                         <span class="work-role">Commercial</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -101,6 +116,7 @@
                 </li>
                 <li class="work-item" data-category="commercial">
                     <a href="projects/goat">
+                        <img class="work-img" src="gallery/goat1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">Xefferson — GOAT Alternate Reality</span>
                         <span class="work-role">Music Video</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -108,6 +124,7 @@
                 </li>
                 <li class="work-item" data-category="commercial">
                     <a href="projects/shaghf">
+                        <img class="work-img" src="gallery/shaghf1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">Shaghf Cafe</span>
                         <span class="work-role">Commercial</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -115,6 +132,7 @@
                 </li>
                 <li class="work-item" data-category="documentary">
                     <a href="projects/granite-reef">
+                        <img class="work-img" src="gallery/grra1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
                         <span class="work-title">Granite Reef Recreation Area</span>
                         <span class="work-role">Documentary</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
@@ -143,15 +161,52 @@
             </div>
         </section>
 
+        <!-- About -->
+        <section class="section about" id="about" aria-labelledby="aboutTitle">
+            <div class="section-head grid">
+                <span class="section-num">03</span>
+                <h2 id="aboutTitle" class="section-title">About</h2>
+            </div>
+
+            <div class="grid">
+                <div class="about-bio">
+                    <p>My name is Max Boissiere, a cinematographer based in Arizona. I shoot narrative shorts, commercials, music videos and documentaries, and I edit corporate and event work.</p>
+                    <p>I grade my own work in DaVinci Resolve and write DCTLs for film emulation, most recently a simulation of Kodak VISION3 500T printed onto Kodak 2383 dye density.</p>
+                </div>
+
+                <div class="about-facts">
+                    <div>
+                        <h3>Cameras</h3>
+                        <ul><li>ARRI Alexa Mini</li><li>RED Komodo</li><li>Sony FX3</li></ul>
+                    </div>
+                    <div>
+                        <h3>Pre-Production</h3>
+                        <ul><li>Previs</li><li>Shotlist</li><li>Storyboard</li><li>Pre-Light</li></ul>
+                    </div>
+                    <div>
+                        <h3>Light</h3>
+                        <ul><li>Aputure 300d II</li><li>Godox SL60W</li></ul>
+                    </div>
+                    <div>
+                        <h3>Clients</h3>
+                        <ul><li>Arizona State University</li><li>REI</li><li>NAMI</li><li>Arizona Center for Youth Resources</li><li>Pita Jungle</li><li>Shaghf Cafe</li><li>Wild BBQ</li></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact -->
         <section class="section contact" id="contact" aria-labelledby="contactTitle">
             <div class="section-head grid">
-                <span class="section-num">03</span>
+                <span class="section-num">04</span>
                 <h2 id="contactTitle" class="section-title">Ready to start<br>your project?</h2>
             </div>
 
             <div class="grid">
-                <p class="contact-lede">Available as a cinematographer for narrative, commercial and documentary work in Arizona and beyond, and for corporate editing. Tell me what you're making.</p>
+                <div class="contact-lede">
+                    <p>Available as a cinematographer for narrative, commercial and documentary work in Arizona and beyond, and for corporate editing. Tell me what you're making.</p>
+                    <a class="contact-email" href="mailto:max.boissiere@pictureup.co">max.boissiere@pictureup.co</a>
+                </div>
 
                 <form class="contact-form" action="https://formsubmit.co/83d159fc0ebc7f39931d8983115aa623" method="POST">
                     <!-- FormSubmit config -->
@@ -207,11 +262,6 @@
         </section>
     </main>
 
-    <!-- Full reel with sound -->
-    <dialog id="reelDialog" class="reel-dialog" aria-label="Showreel">
-        <button type="button" class="reel-close" id="closeReel">Close <span aria-hidden="true">&times;</span></button>
-        <div class="reel-frame"></div>
-    </dialog>
 
     <div id="footer-placeholder"></div>
 

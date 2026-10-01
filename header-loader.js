@@ -11,7 +11,8 @@ function loadHeader() {
             <nav class="hd-nav" aria-label="Primary">
                 <a href="${inProject ? root : '#reel'}" data-section="reel"><span class="hd-num">01</span>${inProject ? 'Index' : 'Reel'}</a>
                 <a href="${inProject ? root + '#work' : '#work'}" data-section="work"><span class="hd-num">02</span>Work</a>
-                <a href="${inProject ? root + '#contact' : '#contact'}" data-section="contact"><span class="hd-num">03</span>Contact</a>
+                <a href="${inProject ? root + '#about' : '#about'}" data-section="about"><span class="hd-num">03</span>About</a>
+                <a href="${inProject ? root + '#contact' : '#contact'}" data-section="contact"><span class="hd-num">04</span>Contact</a>
                 <button class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle light and dark theme">
                     <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>

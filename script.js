@@ -4,7 +4,6 @@
 
     history.scrollRestoration = 'manual';
 
-    const REEL_ID = '1180727658';
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ================================
@@ -49,8 +48,31 @@
         if (lenis) on ? lenis.stop() : lenis.start();
     }
 
+    // Print misregistration: scroll speed knocks the CMY plates of the display
+    // type out of register; they settle back into a clean impression at rest
+    function initMisregistration() {
+        if (reducedMotion) return;
+        const root = document.documentElement;
+        let lastY = window.scrollY, shift = 0, running = false;
+        const tick = () => {
+            const y = window.scrollY;
+            shift += (Math.max(-60, Math.min(60, y - lastY)) - shift) * 0.18;
+            lastY = y;
+            if (Math.abs(shift) < 0.05) {
+                shift = 0;
+                running = false;
+            } else {
+                requestAnimationFrame(tick);
+            }
+            root.style.setProperty('--mis', shift.toFixed(2));
+        };
+        window.addEventListener('scroll', () => {
+            if (!running) { running = true; requestAnimationFrame(tick); }
+        }, { passive: true });
+    }
+
     // ================================
-    // Hero reel: progress bar + sound dialog
+    // Hero reel: progress bar + pause control
     // ================================
     function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -76,42 +98,33 @@
         const iframe = document.getElementById('heroReel');
         if (!hero || !iframe) return;
 
-        let player = null;
         if (!window.Vimeo) {
             // Player API unavailable: just reveal the background video
             hero.classList.add('is-playing');
         } else {
             const bar = document.getElementById('hudBar');
-            player = new window.Vimeo.Player(iframe);
+            const player = new window.Vimeo.Player(iframe);
             player.on('play', () => hero.classList.add('is-playing'));
             player.on('timeupdate', (data) => { bar.style.transform = `scaleX(${data.percent || 0})`; });
+
+            // Visitor-controlled pause; scrolling back into view respects it
+            let userPaused = false;
+            const pauseBtn = document.getElementById('pauseReel');
+            pauseBtn.hidden = false;
+            pauseBtn.addEventListener('click', () => {
+                userPaused = !userPaused;
+                if (userPaused) player.pause().catch(() => {});
+                else player.play().catch(() => {});
+                pauseBtn.querySelector('.pause-label').textContent = userPaused ? 'Play reel' : 'Pause reel';
+                pauseBtn.querySelector('.pause-icon').innerHTML = userPaused ? '&#9654;' : '&#10074;&#10074;';
+            });
+
             // Pause the background reel when it scrolls out of view
             new IntersectionObserver(([entry]) => {
-                if (entry.isIntersecting) player.play().catch(() => {});
+                if (entry.isIntersecting && !userPaused) player.play().catch(() => {});
                 else player.pause().catch(() => {});
             }, { threshold: 0.05 }).observe(hero);
         }
-
-        initReelDialog(player);
-    }
-
-    function initReelDialog(player) {
-        const dialog = document.getElementById('reelDialog');
-        const frame = dialog.querySelector('.reel-frame');
-
-        document.getElementById('playReel').addEventListener('click', () => {
-            frame.innerHTML = `<iframe src="https://player.vimeo.com/video/${REEL_ID}?autoplay=1&badge=0&title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Showreel"></iframe>`;
-            if (player) player.pause().catch(() => {});
-            dialog.showModal();
-            lockScroll(true);
-        });
-        document.getElementById('closeReel').addEventListener('click', () => dialog.close());
-        dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
-        dialog.addEventListener('close', () => {
-            frame.innerHTML = '';
-            lockScroll(false);
-            if (player) player.play().catch(() => {});
-        });
     }
 
     function initLocalClock() {
@@ -353,7 +366,7 @@
         if (reducedMotion) return;
         document.querySelectorAll('.hero-name, .section-title, .project-hero h1').forEach(splitLines);
 
-        const targets = document.querySelectorAll('.section-head, .work-item, .work-aside, .contact-form, .contact-lede, .project-hero, .videos-container, .detail-section, .still-item, .blog-section, .site-footer');
+        const targets = document.querySelectorAll('.section-head, .work-item, .work-aside, .about-bio, .about-facts > div, .contact-form, .contact-lede, .project-hero, .videos-container, .detail-section, .still-item, .blog-section, .site-footer');
         // Items in a grid cascade across each row
         targets.forEach(el => {
             const cols = getComputedStyle(el.parentElement).gridTemplateColumns.split(' ').length;
@@ -470,29 +483,46 @@
     // ================================
     // Project pages
     // ================================
-    // Prev/Next wrap around in the same order as the home page
-    const PROJECT_ORDER = [
-        'sah', 'acyr', 'pitajungle', 'chatgpt', 'wildbbq', 'goat', 'shaghf', 'granite-reef',
-        'rei', 'nami', 'asu', 'blog-06-29-25'
-    ];
-
+    // Prev/Next wrap around in the order the home page lists projects, read
+    // from the home page itself so that order lives in one place
     function initProjectNav() {
         const top = document.getElementById('nav-top');
         const bottom = document.getElementById('nav-bottom');
         if (!top && !bottom) return;
 
-        const i = PROJECT_ORDER.indexOf(location.pathname.split('/').pop().replace(/\.html?$/, ''));
-        const n = PROJECT_ORDER.length;
-        const prev = i === -1 ? '../' : PROJECT_ORDER[(i - 1 + n) % n];
-        const next = i === -1 ? '../' : PROJECT_ORDER[(i + 1) % n];
-
         const build = (cls) => `<nav class="${cls}" aria-label="Project navigation">
-            <a href="${prev}" class="back-link"><span class="pn-label">Previous</span><span class="pn-arrow" aria-hidden="true">&larr;</span></a>
+            <a href="../" class="back-link"><span class="pn-label">Previous</span><span class="pn-arrow" aria-hidden="true">&larr;</span></a>
             <a href="../#work" class="index-link"><span class="pn-label">Index</span></a>
-            <a href="${next}" class="next-link"><span class="pn-label">Next</span><span class="pn-arrow" aria-hidden="true">&rarr;</span></a>
+            <a href="../" class="next-link"><span class="pn-label">Next</span><span class="pn-arrow" aria-hidden="true">&rarr;</span></a>
         </nav>`;
         if (top) top.outerHTML = build('project-nav-top');
         if (bottom) bottom.outerHTML = build('project-nav');
+
+        const slugOf = (href) => href.split('projects/').pop().replace(/\.html?$/, '');
+        fetch('../').then(r => r.text()).then(html => {
+            const home = new DOMParser().parseFromString(html, 'text/html');
+            const order = Array.from(home.querySelectorAll('#work a[href^="projects/"]'), a => slugOf(a.getAttribute('href')));
+            const i = order.indexOf(slugOf(location.pathname.split('/').pop()));
+            if (i === -1) return;
+            const n = order.length;
+            document.querySelectorAll('a.back-link').forEach(a => a.setAttribute('href', order[(i - 1 + n) % n]));
+            document.querySelectorAll('a.next-link').forEach(a => a.setAttribute('href', order[(i + 1) % n]));
+            initLocalDevLinkFix();
+        }).catch(() => {});
+    }
+
+    // Contact form: FormSubmit redirects back here with ?sent, which swaps in a confirmation
+    function initContactForm() {
+        const form = document.querySelector('.contact-form');
+        if (!form) return;
+        form.elements._next.value = `${location.origin}${location.pathname}?sent#contact`;
+        if (!new URLSearchParams(location.search).has('sent')) return;
+        const note = document.createElement('p');
+        note.className = 'form-sent';
+        note.setAttribute('role', 'status');
+        note.textContent = "Thanks, your inquiry was sent. I'll be in touch soon.";
+        form.replaceWith(note);
+        history.replaceState(null, '', `${location.pathname}#contact`);
     }
 
     // Number the detail blocks on project pages (Swiss index labels)
@@ -525,12 +555,14 @@
     document.addEventListener('DOMContentLoaded', () => {
         initSmoothScroll();
         initHeroMotion();
+        initMisregistration();
         initHeaderState();
         initSectionIndicator();
         initHeroReel();
         initLocalClock();
         initWorkFilters();
         initProjectNav();
+        initContactForm();
         numberDetailSections();
         initStillsViewer();
         initScrollReveal();
