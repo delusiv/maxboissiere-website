@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(node -e \":*)",
-      "Bash(where.exe node:*)"
+      "Bash(where.exe node:*)",
+      "Bash(git rm *)"
     ]
   }
 }

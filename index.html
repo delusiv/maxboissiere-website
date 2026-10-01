@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Max Boissiere</title>
-    <meta name="description" content="Max Boissiere - Director of Photography, Editor, and Director. View projects from Arizona Center for Youth Resources, REI, NAMI, ASU Engineering, and more.">
-    <meta name="keywords" content="cinematographer, director of photography, editor, director, film, video production, portfolio">
+    <title>Max Boissiere — Cinematographer</title>
+    <meta name="description" content="Max Boissiere is an Arizona-based cinematographer for narrative, commercial and documentary work. Also available for corporate editing — clients include ASU, REI and NAMI.">
+    <meta name="keywords" content="cinematographer, director of photography, narrative, commercial, documentary, Arizona, Phoenix, corporate video editor, portfolio">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://player.vimeo.com">
     <script>
         // Apply saved theme immediately to prevent flash
         (function() {
-            const savedTheme = localStorage.getItem('theme') || 
+            const savedTheme = localStorage.getItem('theme') ||
                 (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
@@ -22,182 +23,164 @@
 </head>
 <body>
     <div id="header-placeholder"></div>
-    
-    <main role="main" aria-label="Portfolio gallery">
-        <!-- <section class="featured-reel" aria-label="Featured reel">
-            <div class="featured-reel-inner">
-                <div class="featured-reel-video">
-                    <iframe src="https://player.vimeo.com/video/1180727658?autoplay=1&loop=1&muted=1&background=1&badge=0&title=0&byline=0&portrait=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen title="Featured Reel"></iframe>
-                </div>
-            </div>
-        </section> -->
 
-        <!-- Intro Section / About -->
-        <section class="intro-hero load-item" aria-label="About Max and services">
-                    <ul class="service-chips" aria-label="Filter projects by service">
-                        <li role="button" tabindex="0" data-filter="reel" aria-pressed="false">Reel</li>
-                        <li role="button" tabindex="0" data-filter="dp" aria-pressed="false">Cinematography</li>
-                        <li role="button" tabindex="0" data-filter="editor" aria-pressed="false">Editing</li>
-                        <li role="button" tabindex="0" data-filter="director" aria-pressed="false">Directing</li>
-                    </ul>
-        </section>
-
+    <main>
         <h1 class="visually-hidden">Max Boissiere Cinematography Portfolio</h1>
 
-        <div id="reelSection" class="reel-section" style="display:none;">
-            <div class="reel-video-container">
-                <iframe src="https://player.vimeo.com/video/1180727658?badge=0&title=0&byline=0&portrait=0&autopause=0&player_id=0&app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen title="Featured Reel"></iframe>
-            </div>
-        </div>
-
-        <div id="gallery" class="gallery-container" role="grid" aria-label="Portfolio projects grid">
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/pitajungle1.mov" role="gridcell">
-                <a href="projects/pitajungle" aria-label="Pita Jungle project">
-                    <img src="gallery/pita1.png" alt="Pita Jungle project still" loading="lazy">
-                    <div class="overlay">Pita Jungle</div>
-                </a>
+        <!-- Hero: autoplaying reel -->
+        <section class="hero" id="reel" aria-label="Showreel">
+            <div class="hero-media" aria-hidden="true">
+                <iframe id="heroReel" src="https://player.vimeo.com/video/1180727658?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" title="Showreel (background)" tabindex="-1"></iframe>
             </div>
 
-            <div class="gallery-item" data-category="dp" data-video="gallery/wildbbq1.mov" role="gridcell">
-                <a href="projects/wildbbq" aria-label="Wild BBQ project">
-                    <img src="gallery/wildbbq1.png" alt="Wild BBQ project still" loading="lazy">
-                    <div class="overlay">Wild BBQ</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/shaghf2.mov" role="gridcell">
-                <a href="projects/shaghf" aria-label="Shaghf Cafe project">
-                    <img src="gallery/shaghf1.png" alt="Shaghf Cafe project still" loading="lazy">
-                    <div class="overlay">Shaghf Cafe</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/fadetherapy2.mov" role="gridcell">
-                <a href="projects/fadetherapy" aria-label="Fade Therapy project">
-                    <img src="gallery/fade1.png" alt="Fade Therapy project still" loading="lazy">
-                    <div class="overlay">Fade Therapy</div>
-                </a>
-            </div>
-
-             <div class="gallery-item" data-category="dp" data-video="gallery/acyr.mov" role="gridcell">
-                <a href="projects/acyr" aria-label="Arizona Center for Youth Resources project">
-                    <img src="gallery/acyrcover.png" alt="Arizona Center for Youth Resources documentary project still" loading="lazy">
-                    <div class="overlay">Arizona Center for Youth Resources</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="editor" data-video="gallery/reisummit.mov" role="gridcell">
-                <a href="projects/rei" aria-label="REI Better Life Summit project">
-                    <img src="gallery/rei1.png" alt="REI Better Life Summit video project still" loading="lazy">
-                    <div class="overlay">REI Better Life Summit</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="editor" data-video="gallery/nami.mp4" role="gridcell">
-                <a href="projects/nami" aria-label="NAMI Faith Program project">
-                    <img src="gallery/nami1.png" alt="NAMI Faith Program video project still" loading="lazy">
-                    <div class="overlay">NAMI Faith Program</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="editor" data-video="gallery/sfl.mp4" role="gridcell">
-                <a href="projects/asu" aria-label="ASU Space Futures Live - Online">
-                    <img src="gallery/sfl1.png" alt="ASU Space Futures Live - Online project still" loading="lazy">
-                    <div class="overlay">ASU Space Futures Live - Online</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/sah.mp4" role="gridcell">
-                <a href="projects/sah" aria-label="Something About Him project">
-                    <img src="gallery/sah1.png" alt="Something About Him short film project still" loading="lazy">
-                    <div class="overlay">Something About Him</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/goat.mp4" role="gridcell">
-                <a href="projects/goat" aria-label="Xefferson GOAT Alternate Reality project">
-                    <img src="gallery/goat1.png" alt="Xefferson GOAT Alternate Reality music video project still" loading="lazy">
-                    <div class="overlay">Xefferson - GOAT Alternate Reality</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="director" data-video="gallery/shitpost.mp4" role="gridcell">
-                <a href="projects/shitpost" aria-label="A Shitpost by Max Boissiere project">
-                    <img src="gallery/shitpost1.png" alt="A Shitpost by Max Boissiere comedy short project still" loading="lazy">
-                    <div class="overlay">A Shitpost by Max Boissiere</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/pj.mp4" role="gridcell">
-                <a href="projects/pj" aria-label="PonyJam 2024 project">
-                    <img src="gallery/pj1.png" alt="PonyJam 2024 game jam event coverage project still" loading="lazy">
-                    <div class="overlay">PonyJam 2024</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/gpt.mp4" role="gridcell">
-                <a href="projects/chatgpt" aria-label="High-Key Horror project">
-                    <img src="gallery/gpt1.png" alt="High-Key Horror cinematography project still" loading="lazy">
-                    <div class="overlay">High-Key Horror</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="editor" data-video="gallery/dctl.mp4" role="gridcell">
-                <a href="projects/blog-06-29-25" aria-label="Dye Simulator DCTL Blog project">
-                    <img src="gallery/DCTL.png" alt="Dye Simulator DCTL and 500T Film Simulation blog post" loading="lazy">
-                    <div class="overlay">Dye Simulator DCTL Blog</div>
-                </a>
-            </div>
-
-            <div class="gallery-item" data-category="dp" data-video="gallery/grra.mp4" role="gridcell">
-                <a href="projects/granite-reef" aria-label="Granite Reef Recreation Area project">
-                    <img src="gallery/grra2.png" alt="Granite Reef Recreation Area cinematography project" loading="lazy">
-                    <div class="overlay">Granite Reef Recreation Area</div>
-                </a>
-            </div>
-            
-            <!-- Plus Icon for Contact Section -->
-            <div class="gallery-item gallery-plus-item" id="galleryPlusIcon" role="button" tabindex="0" aria-label="Toggle contact section">
-                <div class="plus-icon-container">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/>
-                    </svg>
+            <div class="hero-foot grid">
+                <p class="hero-name" aria-hidden="true">Max<br>Boissiere</p>
+                <ul class="hero-roles" aria-label="Cinematographer for">
+                    <li class="hero-roles-head">Cinematographer</li>
+                    <li>Narrative</li>
+                    <li>Commercial</li>
+                    <li>Documentary</li>
+                </ul>
+                <div class="hero-actions">
+                    <button type="button" class="hero-btn" id="playReel"><span class="dot" aria-hidden="true"></span>Play with sound</button>
+                    <a class="hero-btn" href="#work">View work <span aria-hidden="true">&darr;</span></a>
                 </div>
             </div>
-            
-        </div>
-    </main>
 
-    <!-- Contact Section -->
-    <div id="contactSection" class="contact-section">
-        <div class="contact-content">
-            <h2>Ready to start your project?</h2>
-            <form class="contact-form" action="https://formsubmit.co/83d159fc0ebc7f39931d8983115aa623" method="POST">
-                <!-- FormSubmit config -->
-                <input type="hidden" name="_subject" value="New portfolio inquiry">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="./#contactSection">
-                <input type="hidden" name="_replyto" value="{email}">
-                <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+            <div class="hero-progress" aria-hidden="true"><span id="hudBar"></span></div>
+        </section>
 
-                <div class="form-row">
+        <!-- Work -->
+        <section class="section work" id="work" aria-labelledby="workTitle">
+            <div class="section-head grid">
+                <span class="section-num">02</span>
+                <h2 id="workTitle" class="section-title">Selected Work</h2>
+                <ul class="filters" aria-label="Filter projects by type">
+                    <li><button type="button" data-filter="all" aria-pressed="true">All <sup class="count"></sup></button></li>
+                    <li><button type="button" data-filter="narrative" aria-pressed="false">Narrative <sup class="count"></sup></button></li>
+                    <li><button type="button" data-filter="commercial" aria-pressed="false">Commercial <sup class="count"></sup></button></li>
+                    <li><button type="button" data-filter="documentary" aria-pressed="false">Documentary <sup class="count"></sup></button></li>
+                </ul>
+            </div>
+
+            <ol id="gallery" class="work-grid">
+                <li class="work-item" data-category="narrative">
+                    <a href="projects/sah">
+                        <span class="work-title">Something About Him</span>
+                        <span class="work-role">Narrative</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="work-item" data-category="documentary">
+                    <a href="projects/acyr">
+                        <span class="work-title">Arizona Center for Youth Resources</span>
+                        <span class="work-role">Documentary</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="work-item" data-category="commercial">
+                    <a href="projects/pitajungle">
+                        <span class="work-title">Pita Jungle</span>
+                        <span class="work-role">Commercial</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="work-item" data-category="narrative">
+                    <a href="projects/chatgpt">
+                        <span class="work-title">High-Key Horror</span>
+                        <span class="work-role">Narrative</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="work-item" data-category="commercial">
+                    <a href="projects/wildbbq">
+                        <span class="work-title">Wild BBQ</span>
+                        <span class="work-role">Commercial</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="work-item" data-category="commercial">
+                    <a href="projects/goat">
+                        <span class="work-title">Xefferson — GOAT Alternate Reality</span>
+                        <span class="work-role">Music Video</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="work-item" data-category="commercial">
+                    <a href="projects/shaghf">
+                        <span class="work-title">Shaghf Cafe</span>
+                        <span class="work-role">Commercial</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="work-item" data-category="documentary">
+                    <a href="projects/granite-reef">
+                        <span class="work-title">Granite Reef Recreation Area</span>
+                        <span class="work-role">Documentary</span>
+                        <span class="work-arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ol>
+
+            <!-- Editorial (corporate) -->
+            <div class="work-aside grid" aria-labelledby="editorialTitle">
+                <h3 id="editorialTitle" class="aside-label">Editorial</h3>
+                <p class="aside-text">Corporate and event editing for VideoWest. Clients include ASU, REI and NAMI.</p>
+                <ul class="aside-links">
+                    <li><a href="projects/rei"><span>REI Better Life Summit</span><span class="aside-meta">Editor</span></a></li>
+                    <li><a href="projects/nami"><span>NAMI Faith Program</span><span class="aside-meta">Editor</span></a></li>
+                    <li><a href="projects/asu"><span>ASU Space Futures Live</span><span class="aside-meta">Editor</span></a></li>
+                </ul>
+            </div>
+
+            <!-- Journal -->
+            <div class="work-aside grid" aria-labelledby="journalTitle">
+                <h3 id="journalTitle" class="aside-label">Journal</h3>
+                <p class="aside-text">Notes on color, film emulation and process.</p>
+                <ul class="aside-links">
+                    <li><a href="projects/blog-06-29-25"><span>Dye Simulator DCTL &amp; 500T Film Simulation</span><span class="aside-meta">June 2025</span></a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section contact" id="contact" aria-labelledby="contactTitle">
+            <div class="section-head grid">
+                <span class="section-num">03</span>
+                <h2 id="contactTitle" class="section-title">Ready to start<br>your project?</h2>
+            </div>
+
+            <div class="grid">
+                <p class="contact-lede">Available as a cinematographer for narrative, commercial and documentary work in Arizona and beyond, and for corporate editing. Tell me what you're making.</p>
+
+                <form class="contact-form" action="https://formsubmit.co/83d159fc0ebc7f39931d8983115aa623" method="POST">
+                    <!-- FormSubmit config -->
+                    <input type="hidden" name="_subject" value="New portfolio inquiry">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="./#contact">
+                    <input type="hidden" name="_replyto" value="{email}">
+                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input id="name" name="name" type="text" placeholder="Your name" required>
                     </div>
                     <div class="form-group">
-                        <label for="location">Location</label>
-                        <input id="location" name="location" type="text" placeholder="City, Country">
-                    </div>
-                    <div class="form-group">
                         <label for="email">Email</label>
                         <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required>
                     </div>
-                </div>
-
-                <div class="form-row">
+                    <div class="form-group">
+                        <label for="project_type">Project type</label>
+                        <select id="project_type" name="project_type">
+                            <option value="" selected>Select a type</option>
+                            <option value="Narrative">Narrative</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Documentary">Documentary</option>
+                            <option value="Music video">Music video</option>
+                            <option value="Corporate edit">Corporate edit</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="budget">Budget</label>
                         <select id="budget" name="budget">
@@ -208,25 +191,34 @@
                             <option value="$25k+">$25k+</option>
                         </select>
                     </div>
-                </div>
+                    <div class="form-group form-wide">
+                        <label for="location">Location</label>
+                        <input id="location" name="location" type="text" placeholder="City, Country">
+                    </div>
+                    <div class="form-group form-wide">
+                        <label for="description">Description</label>
+                        <textarea data-lenis-prevent id="description" name="description" rows="5" placeholder="Tell me about your project…" required></textarea>
+                    </div>
+                    <div class="form-actions form-wide">
+                        <button type="submit" class="cta-button">Send inquiry <span aria-hidden="true">&rarr;</span></button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
 
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="6" placeholder="Tell me about your project…" required></textarea>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="cta-button">Send Inquiry</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Full reel with sound -->
+    <dialog id="reelDialog" class="reel-dialog" aria-label="Showreel">
+        <button type="button" class="reel-close" id="closeReel">Close <span aria-hidden="true">&times;</span></button>
+        <div class="reel-frame"></div>
+    </dialog>
 
     <div id="footer-placeholder"></div>
 
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
     <script src="header-loader.js"></script>
     <script src="footer-loader.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-

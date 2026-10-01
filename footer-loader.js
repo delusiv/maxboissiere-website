@@ -1,26 +1,23 @@
 // Footer Loader - Max Boissiere
-(function() {
-    'use strict';
-    
+function loadFooter() {
+    // "#top" scrolls to the top of the page natively (smoothly, via scroll-behavior)
     const footerHTML = `
-        <footer>
-            <div class="footer-content">
-                <div class="footer-social">
-                    <a href="https://www.linkedin.com/in/max-boissiere-788115193/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="https://youtube.com/@max.boissiere" target="_blank" rel="noopener noreferrer">YouTube</a>
-                    <a href="https://soundcloud.com/quiet-4444" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-                    <a href="https://instagram.com/max.boissiere" target="_blank" rel="noopener noreferrer">Instagram</a>
-                </div>
-                <p>&copy; 2026 Max Boissiere. All rights reserved.</p>
-            </div>
-        </footer>
-    `;
-    
-    // Load footer when DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-        const footerPlaceholder = document.getElementById('footer-placeholder');
-        if (footerPlaceholder) {
-            footerPlaceholder.outerHTML = footerHTML;
-        }
-    });
-})();
+    <footer class="site-footer">
+        <div class="grid">
+            <p class="ft-name">Max Boissiere</p>
+            <ul class="ft-social">
+                <li><a href="https://www.linkedin.com/in/max-boissiere-788115193/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a href="https://youtube.com/@max.boissiere" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                <li><a href="https://instagram.com/max.boissiere" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                <li><a href="https://soundcloud.com/quiet-4444" target="_blank" rel="noopener noreferrer">SoundCloud</a></li>
+            </ul>
+            <p class="ft-copy">&copy; ${new Date().getFullYear()} Max Boissiere.<br>All rights reserved.</p>
+            <a class="ft-top" href="#top">Back to top <span aria-hidden="true">&uarr;</span></a>
+        </div>
+    </footer>`;
+
+    const placeholder = document.getElementById('footer-placeholder');
+    if (placeholder) placeholder.outerHTML = footerHTML;
+}
+
+document.addEventListener('DOMContentLoaded', loadFooter);
