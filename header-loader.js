@@ -6,8 +6,7 @@ function loadHeader() {
     const headerHTML = `
     <header class="site-header">
         <div class="grid">
-            <a class="hd-name" href="${root}">Max Boissiere</a>
-            <span class="hd-loc">Arizona, USA <span class="hd-clock" id="hdClock"></span></span>
+            <span class="hd-loc"><span class="hd-place">Arizona, USA</span><span class="hd-clock" id="hdClock"></span></span>
             <nav class="hd-nav" aria-label="Primary">
                 <a href="${inProject ? root : '#reel'}" data-section="reel"><span class="hd-num">01</span>${inProject ? 'Index' : 'Reel'}</a>
                 <a href="${inProject ? root + '#work' : '#work'}" data-section="work"><span class="hd-num">02</span>Work</a>

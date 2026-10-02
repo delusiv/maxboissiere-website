@@ -81,14 +81,11 @@ p{max-width:62ch}
 .site-header.is-solid{mix-blend-mode:normal;color:var(--ink);pointer-events:auto}
 .site-header.is-solid::before{transform:none}
 .site-header a,.site-header button{pointer-events:auto}
-.hd-name{position:relative;grid-column:1/span 3;justify-self:start;padding:.25rem 0;font-weight:700}
-.hd-loc{grid-column:4/span 4}
+.hd-loc{grid-column:1/span 5;grid-row:1;justify-self:start}
 .hd-clock{margin-left:.5rem;font-variant-numeric:tabular-nums;opacity:.6}
-.hd-nav{position:relative;grid-column:8/-1;display:flex;justify-content:space-between;gap:1rem}
+.hd-nav{position:relative;grid-column:8/-1;grid-row:1;display:flex;justify-content:space-between;gap:1rem}
 .hd-nav a,.theme-toggle{position:relative;display:inline-flex;align-items:baseline;gap:.4rem;padding:.25rem 0;font-weight:500}
 .hd-num{font-size:.6875rem;font-variant-numeric:tabular-nums;opacity:.6}
-.hd-name::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
-.hd-name:hover::after{transform:scaleX(1);transform-origin:left}
 /* Theme toggle: sun sets / moon rises */
 .theme-toggle{width:1.75rem;height:1.5rem;align-self:center;justify-content:center;padding:0;overflow:hidden;transition:opacity .3s ease}
 .theme-toggle:hover{opacity:.6}
@@ -330,7 +327,6 @@ p{max-width:62ch}
 
 /* ========== RESPONSIVE ========== */
 @media (max-width:1100px){
-    .hd-name{grid-column:1/span 4}
     .hd-nav{grid-column:6/-1}
     .hero-name{grid-column:1/-1;margin-bottom:2rem}
     .hero-roles{grid-column:1/span 6}
@@ -343,7 +339,8 @@ p{max-width:62ch}
 @media (max-width:768px){
     :root{--cols:4;--gutter:1rem;--margin:1rem;--hd:3.5rem;--space:7.5rem}
     .site-header .grid{display:flex;justify-content:space-between;gap:1rem}
-    .hd-loc{display:none}
+    .hd-place{display:none}
+    .hd-clock{margin-left:0}
     .hd-nav{gap:.9rem}
     .hd-num{display:none}
     .hd-nav a:first-child{display:none}
