@@ -21,6 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://f.vimeocdn.com">
     <script>
         // Apply saved theme immediately to prevent flash
         (function() {
@@ -32,6 +33,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Intro loader: a fixed count-up, then the black lifts away over the reel -->
+    <div class="loader" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="loader-foot">
+            <span class="loader-name">Max Boissiere</span>
+            <span class="loader-pct" id="loaderPct" aria-hidden="true">0</span>
+        </div>
+        <div class="loader-bar" aria-hidden="true"><span id="loaderBar"></span></div>
+    </div>
+    <noscript><style>.loader{display:none}</style></noscript>
     <div id="header-placeholder"></div>
 
     <main>
@@ -40,6 +50,7 @@
         <!-- Hero: autoplaying reel -->
         <section class="hero" id="reel" aria-label="Showreel">
             <div class="hero-media" aria-hidden="true">
+                <img class="hero-fallback" src="gallery/reel-fallback.webp" srcset="gallery/reel-fallback-960.webp 960w, gallery/reel-fallback.webp 1920w" sizes="(orientation: portrait) 177.78vh, 100vw" width="1920" height="1080" alt="" decoding="async">
                 <iframe id="heroReel" src="https://player.vimeo.com/video/1232263132?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" title="Showreel (background)" tabindex="-1"></iframe>
             </div>
 
@@ -75,9 +86,9 @@
 
             <ol id="gallery" class="work-grid">
                 <li class="work-item" data-category="narrative">
-                    <a href="projects/sah">
-                        <img class="work-img" src="gallery/sah1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
-                        <span class="work-title">Something About Him</span>
+                    <a href="projects/selfstorage">
+                        <img class="work-img" src="gallery/storage1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
+                        <span class="work-title">Self Storage</span>
                         <span class="work-role">Narrative</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
                     </a>
@@ -115,10 +126,10 @@
                     </a>
                 </li>
                 <li class="work-item" data-category="commercial">
-                    <a href="projects/goat">
-                        <img class="work-img" src="gallery/goat1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
-                        <span class="work-title">Xefferson — GOAT Alternate Reality</span>
-                        <span class="work-role">Music Video</span>
+                    <a href="projects/uchenova">
+                        <img class="work-img" src="gallery/uchenova1-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async">
+                        <span class="work-title">Better Call Uche Nova</span>
+                        <span class="work-role">Commercial</span>
                         <span class="work-arrow" aria-hidden="true">&rarr;</span>
                     </a>
                 </li>

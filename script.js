@@ -48,6 +48,59 @@
         if (lenis) on ? lenis.stop() : lenis.start();
     }
 
+    // ================================
+    // Intro loader: counts 0 to 100 on a fixed curve (never waits on the network,
+    // so it never stalls), then the black lifts away over the reel.
+    // ================================
+    const loaderEl = document.getElementById('loader');
+    const loaderCallbacks = [];
+    let loaderFinished = !loaderEl;
+    const LOADER_COUNT_MS = 1500;
+
+    // Run fn once the loader has lifted (immediately if there is none)
+    function afterLoader(fn) {
+        if (loaderFinished) fn();
+        else loaderCallbacks.push(fn);
+    }
+
+    function initLoader() {
+        if (!loaderEl) return;
+        lockScroll(true);
+        const bar = document.getElementById('loaderBar');
+        const pct = document.getElementById('loaderPct');
+        // Expo in-out: slow start, fast middle, gentle landing on 100
+        const ease = (t) => t === 0 ? 0 : t === 1 ? 1
+            : t < 0.5 ? Math.pow(2, 20 * t - 10) / 2 : (2 - Math.pow(2, -20 * t + 10)) / 2;
+
+        const open = () => {
+            loaderEl.classList.add('is-done');
+            lockScroll(false);
+            loaderFinished = true;
+            // Let the hero type rise while the curtain is mid-lift
+            setTimeout(() => loaderCallbacks.splice(0).forEach((fn) => fn()), reducedMotion ? 0 : 700);
+            loaderEl.addEventListener('transitionend', () => loaderEl.remove(), { once: true });
+        };
+
+        if (reducedMotion) {
+            pct.textContent = 100;
+            open();
+            return;
+        }
+
+        let start = null;
+        const tick = (now) => {
+            if (start === null) start = now;
+            const t = Math.min(1, (now - start) / LOADER_COUNT_MS);
+            const p = ease(t);
+            bar.style.transform = `scaleX(${p})`;
+            pct.textContent = Math.round(p * 100);
+            loaderEl.setAttribute('aria-valuenow', Math.round(p * 100));
+            if (t < 1) requestAnimationFrame(tick);
+            else setTimeout(open, 250);
+        };
+        requestAnimationFrame(tick);
+    }
+
     // Print misregistration: scroll speed knocks the CMY plates of the display
     // type out of register; they settle back into a clean impression at rest
     function initMisregistration() {
@@ -90,7 +143,7 @@
         window.addEventListener('resize', update);
         // Intro: reveal the name, then roles and buttons, once the page has painted
         hero.classList.add('is-intro');
-        requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('is-ready')));
+        afterLoader(() => requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('is-ready'))));
     }
 
     function initHeroReel() {
@@ -98,13 +151,26 @@
         const iframe = document.getElementById('heroReel');
         if (!hero || !iframe) return;
 
+        // Fall back to a still if the reel hasn't started a few seconds in
+        // (slow network, blocked Vimeo, autoplay off in low-power mode)
+        const showFallback = () => {
+            if (!hero.classList.contains('is-playing')) hero.classList.add('is-fallback');
+        };
+        const fallbackTimer = setTimeout(showFallback, 4000);
+
         if (!window.Vimeo) {
-            // Player API unavailable: just reveal the background video
-            hero.classList.add('is-playing');
+            // Player API unavailable: reveal the iframe in case it plays, with the still beneath
+            hero.classList.add('is-playing', 'is-fallback');
+            clearTimeout(fallbackTimer);
         } else {
             const bar = document.getElementById('hudBar');
             const player = new window.Vimeo.Player(iframe);
-            player.on('play', () => hero.classList.add('is-playing'));
+            player.on('play', () => {
+                hero.classList.add('is-playing');
+                clearTimeout(fallbackTimer);
+            });
+            player.on('error', showFallback);
+            player.ready().catch(showFallback);
             player.on('timeupdate', (data) => { bar.style.transform = `scaleX(${data.percent || 0})`; });
 
             // Visitor-controlled pause; scrolling back into view respects it
@@ -125,6 +191,27 @@
                 else player.pause().catch(() => {});
             }, { threshold: 0.05 }).observe(hero);
         }
+    }
+
+    // Touch screens: cards stay monochrome until pressed. The press reveals
+    // colour and category, and the link opens a beat later so the reveal reads.
+    function initCardPress() {
+        if (!window.matchMedia('(hover: none)').matches) return;
+        const cards = document.querySelectorAll('.work-item a');
+        const release = () => cards.forEach((a) => a.classList.remove('is-pressed'));
+        cards.forEach((a) => {
+            a.addEventListener('pointerdown', () => a.classList.add('is-pressed'));
+            // Scrolling hands the touch to the browser, which cancels the press
+            a.addEventListener('pointercancel', () => a.classList.remove('is-pressed'));
+            a.addEventListener('click', (e) => {
+                if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+                e.preventDefault();
+                a.classList.add('is-pressed');
+                setTimeout(() => { window.location.href = a.href; }, reducedMotion ? 0 : 320);
+            });
+        });
+        // Coming back via the back button restores the page from cache mid-press
+        window.addEventListener('pageshow', release);
     }
 
     function initLocalClock() {
@@ -554,6 +641,7 @@
     // ================================
     document.addEventListener('DOMContentLoaded', () => {
         initSmoothScroll();
+        initLoader();
         initHeroMotion();
         initMisregistration();
         initHeaderState();
@@ -561,6 +649,7 @@
         initHeroReel();
         initLocalClock();
         initWorkFilters();
+        initCardPress();
         initProjectNav();
         initContactForm();
         numberDetailSections();
